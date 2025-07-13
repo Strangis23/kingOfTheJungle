@@ -145,19 +145,19 @@ export const PLAYBOOK_DATA: { [key in Playbook]: { name: string, description: st
 const ALL_PLAYERS: Player[] = [
   // == Existing Players ==
   // Commons (4)
-  { id: 'p1', name: 'Leo "The Lion" Chen', description: "A relentless driver, he's known for finding a way to the basket, no matter who's in front of him.", archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: 'assets/images/players/p1.jpeg' },
-  { id: 'p2', name: 'Maya "Deadeye" Singh', description: "Give her an inch of space, and she'll make you pay from downtown. A pure shooter.", archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: 'assets/images/players/p2.jpeg' },
-  { id: 'p3', name: 'Sam "Dime" Jones', description: "Sees plays before they happen. Sam's passes are a work of art, always finding the open player.", archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: 'assets/images/players/p3.jpeg' },
-  { id: 'p4', name: 'Kenji "The Wall" Tanaka', description: "The paint is his house. Opponents think twice before driving on Kenji.", archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: 'assets/images/players/p4.jpeg' },
+  { id: 'p1', name: 'Leo "The Lion" Chen', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: 'assets/images/players/p1.jpeg' },
+  { id: 'p2', name: 'Maya "Deadeye" Singh', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: 'assets/images/players/p2.jpeg' },
+  { id: 'p3', name: 'Sam "Dime" Jones', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: 'assets/images/players/p3.jpeg' },
+  { id: 'p4', name: 'Kenji "The Wall" Tanaka', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: 'assets/images/players/p4.jpeg' },
   // Rares (3)
-  { id: 'player-rare-1', name: 'Isabelle "Matrix" Moreau', description: "A blur on both ends of the court, she dictates the pace with slick handles and even quicker hands on defense.", archetypes: [Archetype.Playmaker, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/player-rare-1.jpeg' },
-  { id: 'player-rare-2', name: 'Jaxson "Apex" Williams', description: "He'll dunk on you on one end and send your shot into the stands on the other. A true vertical threat.", archetypes: [Archetype.Slasher, Archetype.RimProtector], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/player-rare-2.jpeg' },
-  { id: 'player-rare-3', name: 'Caden "Tripod" Lee', description: "A master of the '3-and-D' role. He'll drain a three in your face and then lock down your best scorer.", archetypes: [Archetype.Sharpshooter, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/player-rare-3.jpeg' },
+  { id: 'player-rare-1', name: 'Isabelle "Matrix" Moreau', archetypes: [Archetype.Playmaker, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/player-rare-1.jpeg' },
+  { id: 'player-rare-2', name: 'Jaxson "Apex" Williams', archetypes: [Archetype.Slasher, Archetype.RimProtector], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/player-rare-2.jpeg' },
+  { id: 'player-rare-3', name: 'Caden "Tripod" Lee', archetypes: [Archetype.Sharpshooter, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/player-rare-3.jpeg' },
   // Legendary (1)
-  { id: 'player-legend-1', name: 'Kaito "Starlight" Ito', description: "He doesn't have a position; he IS the position. Kaito can do it all, and he makes it look easy.", archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/player-legend-1.jpeg' },
+  { id: 'player-legend-1', name: 'Kaito "Starlight" Ito', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/player-legend-1.jpeg' },
 
   // == New Commons (56) ==
-  // ... (descriptions can be added here for all players if desired) ...
+  // Slashers
   { id: 'c1', name: 'Dante "Dash" Jones', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: 'assets/images/players/c1.jpeg' },
   { id: 'c2', name: 'Aisha "Sky" Williams', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: 'assets/images/players/c2.jpeg' },
   { id: 'c3', name: 'Marco "Momentum" Petrov', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: 'assets/images/players/c3.jpeg' },
@@ -221,44 +221,44 @@ const ALL_PLAYERS: Player[] = [
   { id: 'c56', name: 'Anika "Anchor" Sharma', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: 'assets/images/players/c56.jpeg' },
 
   // == New Rares (27) ==
-  { id: 'r1', name: 'Elias "Echo" Vance', description: "His passes seem to echo his shots; both are deadly accurate.", archetypes: [Archetype.Playmaker, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r1.jpeg' },
-  { id: 'r2', name: 'Bianca "Blitz" Romano', description: "A flash of lightning on the court, she attacks the rim on offense and smothers ball-handlers on defense.", archetypes: [Archetype.Slasher, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r2.jpeg' },
-  { id: 'r3', name: 'Cyrus "The Cyclone" Khan', description: "A whirlwind of motion, he leaves defenders spinning with his dribble moves and sets up teammates with ease.", archetypes: [Archetype.Slasher, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r3.jpeg' },
-  { id: 'r4', name: 'Daria "The Fortress" Ivanova', description: "The entire court is her domain. No shot is safe, no pass is easy.", archetypes: [Archetype.RimProtector, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r4.jpeg' },
-  { id: 'r5', name: 'Finn "The Finisher" O\'Connell', description: "Whether it's a dunk or a three, Finn finds a way to put the ball in the hoop.", archetypes: [Archetype.Slasher, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r5.jpeg' },
-  { id: 'r6', name: 'Gabriela "Gravity" Santos', description: "She bends the court to her will, drawing defenders into the paint only to find an open shooter on the perimeter.", archetypes: [Archetype.RimProtector, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r6.jpeg' },
-  { id: 'r7', name: 'Hiroki "The Hurricane" Tanaka', description: "He pressures ball-handlers relentlessly, turning defense into instant offense with his dazzling passes.", archetypes: [Archetype.OnBallDefender, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r7.jpeg' },
-  { id: 'r8', name: 'Imani "Impact" Adebayo', description: "Every play she makes, on either end, is felt by the opposition. A powerful force in the paint.", archetypes: [Archetype.RimProtector, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r8.jpeg' },
-  { id: 'r9', name: 'Javier "Jaguar" Reyes', description: "He stalks the perimeter, pouncing on lazy passes and finishing with ferocious dunks.", archetypes: [Archetype.PerimeterDefender, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r9.jpeg' },
-  { id: 'r10', name: 'Kira "The Key" Volkov', description: "She unlocks defenses with her shooting and locks down opponents with her tenacity.", archetypes: [Archetype.OnBallDefender, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r10.jpeg' },
-  { id: 'r11', name: 'Liam "Longshot" Murphy', description: "A brilliant passer who also happens to have one of the purest shots in the league.", archetypes: [Archetype.Sharpshooter, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r11.jpeg' },
-  { id: 'r12', name: 'Mona "The Magnet" Al-Farsi', description: "She's a ball magnet on defense, seemingly always in the right place to disrupt the opponent's plans.", archetypes: [Archetype.PerimeterDefender, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r12.jpeg' },
-  { id: 'r13', name: 'Nikolai "The Navigator" Orlov', description: "He charts the course of the offense with his passing while expertly navigating passing lanes on defense.", archetypes: [Archetype.Playmaker, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r13.jpeg' },
-  { id: 'r14', name: 'Owen "The Overlord" Davies', description: "He rules the court from the paint, protecting the rim and stretching the floor with his surprising range.", archetypes: [Archetype.RimProtector, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r14.jpeg' },
-  { id: 'r15', name: 'Priya "The Phantom" Singh', description: "She's there one second and gone the next, slicing to the hoop or stripping the ball before you know what happened.", archetypes: [Archetype.OnBallDefender, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r15.jpeg' },
-  { id: 'r16', name: 'Quinn "Quake" Taylor', description: "Her powerful drives and thunderous blocks shake the very asphalt of the court.", archetypes: [Archetype.Slasher, Archetype.RimProtector], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r16.jpeg' },
-  { id: 'r17', name: 'Rohan "The Rifle" Joshi', description: "His shot is as fast and accurate as a sniper's rifle, and his defense is just as precise.", archetypes: [Archetype.Sharpshooter, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r17.jpeg' },
-  { id: 'r18', name: 'Seraphina "The Sage" Dubois', description: "A wise and patient player who dissects defenses with her passing and shooting.", archetypes: [Archetype.Playmaker, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r18.jpeg' },
-  { id: 'r19', name: 'Titus "Titan" Wallace', description: "A colossal presence on defense. Ball handlers and rim attackers are equally unwelcome.", archetypes: [Archetype.RimProtector, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r19.jpeg' },
-  { id: 'r20', name: 'Uma "The Uprising" Chen', description: "She sparks rebellions against offenses, turning steals into fastbreak points with her court vision.", archetypes: [Archetype.PerimeterDefender, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r20.jpeg' },
-  { id: 'r21', name: 'Victor "Vortex" Morales', description: "He draws defenders in with his drives, only to spit the ball out to a wide-open teammate.", archetypes: [Archetype.Slasher, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r21.jpeg' },
-  { id: 'r22', name: 'Willa "The Warden" Kowalski', description: "She patrols the entire defensive end of the court like a warden, allowing no easy looks.", archetypes: [Archetype.RimProtector, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r22.jpeg' },
-  { id: 'r23', name: 'Xavier "X-Ray" Johnson', description: "He seems to see through defenses with his shot-making and through offensive players with his defense.", archetypes: [Archetype.Sharpshooter, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r23.jpeg' },
-  { id: 'r24', name: 'Yara "The Yoke" Schmidt', description: "She places the yoke of her defensive pressure on attackers, big and small.", archetypes: [Archetype.OnBallDefender, Archetype.RimProtector], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r24.jpeg' },
-  { id: 'r25', name: 'Zane "The Zealot" Al-Jamil', description: "A fervent believer in the power of the three-pointer and the importance of stopping it.", archetypes: [Archetype.PerimeterDefender, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r25.jpeg' },
-  { id: 'r26', name: 'Adrian "The Artist" Bell', description: "He paints masterpieces on the court with his creative passes and elegant drives to the hoop.", archetypes: [Archetype.Playmaker, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r26.jpeg' },
-  { id: 'r27', name: 'Cassia "The Comet" Li', description: "A blazing talent who streaks past defenders for layups or pulls up for a devastating jumper.", archetypes: [Archetype.Sharpshooter, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r27.jpeg' },
+  { id: 'r1', name: 'Elias "Echo" Vance', archetypes: [Archetype.Playmaker, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r1.jpeg' },
+  { id: 'r2', name: 'Bianca "Blitz" Romano', archetypes: [Archetype.Slasher, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r2.jpeg' },
+  { id: 'r3', name: 'Cyrus "The Cyclone" Khan', archetypes: [Archetype.Slasher, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r3.jpeg' },
+  { id: 'r4', name: 'Daria "The Fortress" Ivanova', archetypes: [Archetype.RimProtector, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r4.jpeg' },
+  { id: 'r5', name: 'Finn "The Finisher" O\'Connell', archetypes: [Archetype.Slasher, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r5.jpeg' },
+  { id: 'r6', name: 'Gabriela "Gravity" Santos', archetypes: [Archetype.RimProtector, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r6.jpeg' },
+  { id: 'r7', name: 'Hiroki "The Hurricane" Tanaka', archetypes: [Archetype.OnBallDefender, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r7.jpeg' },
+  { id: 'r8', name: 'Imani "Impact" Adebayo', archetypes: [Archetype.RimProtector, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r8.jpeg' },
+  { id: 'r9', name: 'Javier "Jaguar" Reyes', archetypes: [Archetype.PerimeterDefender, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r9.jpeg' },
+  { id: 'r10', name: 'Kira "The Key" Volkov', archetypes: [Archetype.OnBallDefender, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r10.jpeg' },
+  { id: 'r11', name: 'Liam "Longshot" Murphy', archetypes: [Archetype.Sharpshooter, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r11.jpeg' },
+  { id: 'r12', name: 'Mona "The Magnet" Al-Farsi', archetypes: [Archetype.PerimeterDefender, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r12.jpeg' },
+  { id: 'r13', name: 'Nikolai "The Navigator" Orlov', archetypes: [Archetype.Playmaker, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r13.jpeg' },
+  { id: 'r14', name: 'Owen "The Overlord" Davies', archetypes: [Archetype.RimProtector, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r14.jpeg' },
+  { id: 'r15', name: 'Priya "The Phantom" Singh', archetypes: [Archetype.OnBallDefender, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r15.jpeg' },
+  { id: 'r16', name: 'Quinn "Quake" Taylor', archetypes: [Archetype.Slasher, Archetype.RimProtector], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r16.jpeg' },
+  { id: 'r17', name: 'Rohan "The Rifle" Joshi', archetypes: [Archetype.Sharpshooter, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r17.jpeg' },
+  { id: 'r18', name: 'Seraphina "The Sage" Dubois', archetypes: [Archetype.Playmaker, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r18.jpeg' },
+  { id: 'r19', name: 'Titus "Titan" Wallace', archetypes: [Archetype.RimProtector, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r19.jpeg' },
+  { id: 'r20', name: 'Uma "The Uprising" Chen', archetypes: [Archetype.PerimeterDefender, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r20.jpeg' },
+  { id: 'r21', name: 'Victor "Vortex" Morales', archetypes: [Archetype.Slasher, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r21.jpeg' },
+  { id: 'r22', name: 'Willa "The Warden" Kowalski', archetypes: [Archetype.RimProtector, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r22.jpeg' },
+  { id: 'r23', name: 'Xavier "X-Ray" Johnson', archetypes: [Archetype.Sharpshooter, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r23.jpeg' },
+  { id: 'r24', name: 'Yara "The Yoke" Schmidt', archetypes: [Archetype.OnBallDefender, Archetype.RimProtector], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r24.jpeg' },
+  { id: 'r25', name: 'Zane "The Zealot" Al-Jamil', archetypes: [Archetype.PerimeterDefender, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r25.jpeg' },
+  { id: 'r26', name: 'Adrian "The Artist" Bell', archetypes: [Archetype.Playmaker, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r26.jpeg' },
+  { id: 'r27', name: 'Cassia "The Comet" Li', archetypes: [Archetype.Sharpshooter, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: 'assets/images/players/r27.jpeg' },
   
   // == New Legendaries ("Superstars") (9) ==
-  { id: 'l1', name: 'Orion "The Oracle" Hayes', description: "He doesn't just play the game, he sees its future, manipulating both teams like pieces on a chess board.", archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l1.jpeg' },
-  { id: 'l2', name: 'Serena "The Sovereign" Cruz', description: "The undisputed queen of the court. Her command over every facet of the game is absolute.", archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l2.jpeg' },
-  { id: 'l3', name: 'Maximus "The Monarch" Antonov', description: "A ruler in every sense. He dictates the flow of the game with an iron will and unmatched skill.", archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l3.jpeg' },
-  { id: 'l4', name: 'Astra "The Anomaly" Novak', description: "A player whose skills defy conventional logic. She's a glitch in the system that no one can patch.", archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l4.jpeg' },
-  { id: 'l5', name: 'Ronin "The Ronin" Kim', description: "A masterless warrior who plays by his own code. Unpredictable, unstoppable, and utterly brilliant.", archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l5.jpeg' },
-  { id: 'l6', name: 'Celeste "The Celestial" Moreau', description: "Her game is otherworldly, as if guided by the stars themselves. Truly a heavenly talent.", archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l6.jpeg' },
-  { id: 'l7', name: 'Goliath "The Gatecrasher" Goliath', description: "There is no defense that can keep him out. He simply goes where he pleases, and scores when he wants.", archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l7.jpeg' },
-  { id: 'l8', name: 'Vesper "The Viper" Lin', description: "She strikes with lethal speed and precision, whether it's a game-winning shot or a back-breaking steal.", archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l8.jpeg' },
-  { id: 'l9', name: 'Silas "The Silent" Kane', description: "He makes no grand gestures, no loud claims. His quiet dominance on the court speaks volumes.", archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l9.jpeg' },
+  { id: 'l1', name: 'Orion "The Oracle" Hayes', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l1.jpeg' },
+  { id: 'l2', name: 'Serena "The Sovereign" Cruz', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l2.jpeg' },
+  { id: 'l3', name: 'Maximus "The Monarch" Antonov', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l3.jpeg' },
+  { id: 'l4', name: 'Astra "The Anomaly" Novak', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l4.jpeg' },
+  { id: 'l5', name: 'Ronin "The Ronin" Kim', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l5.jpeg' },
+  { id: 'l6', name: 'Celeste "The Celestial" Moreau', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l6.jpeg' },
+  { id: 'l7', name: 'Goliath "The Gatecrasher" Goliath', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l7.jpeg' },
+  { id: 'l8', name: 'Vesper "The Viper" Lin', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l8.jpeg' },
+  { id: 'l9', name: 'Silas "The Silent" Kane', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: 'assets/images/players/l9.jpeg' },
 ];
 
 
@@ -350,22 +350,17 @@ export const CONCRETE_CRUSHERS: Team = {
     { id: 'op3', name: 'Hammer', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: 'assets/images/players/op3.jpeg' },
   ],
   deck: [
-    // Slasher heavy, physical play
+    // Shots (7)
     createCard('DRIVE_TO_BASKET'), createCard('DRIVE_TO_BASKET'), createCard('DRIVE_TO_BASKET'),
-    createCard('CONTACT_FINISH'), createCard('CONTACT_FINISH'),
-    createCard('POSTERIZER_DUNK'),
-    createCard('AND_1'),
-    // Strong interior defense
-    createCard('VICIOUS_BLOCK'), createCard('VICIOUS_BLOCK'),
-    createCard('INTIMIDATOR'),
-    createCard('VERTICALITY'), createCard('VERTICALITY'),
-    // Basic defense and utility
-    createCard('TOUGH_CONTEST'), createCard('TOUGH_CONTEST'),
-    createCard('DEFENSIVE_STANCE'),
-    createCard('PICK_POCKET'),
-    createCard('QUICK_PASS'),
-    createCard('SPIN_CYCLE'), createCard('SPIN_CYCLE'),
-    createCard('EXPLOSIVE_FIRST_STEP'),
+    createCard('POSTERIZER_DUNK'), createCard('POSTERIZER_DUNK'),
+    createCard('PULL_UP_JUMPER'), createCard('PULL_UP_JUMPER'),
+    // Defense (9)
+    createCard('CONTEST_SHOT'), createCard('CONTEST_SHOT'), createCard('CONTEST_SHOT'),
+    createCard('VICIOUS_BLOCK'), createCard('VICIOUS_BLOCK'), createCard('VICIOUS_BLOCK'),
+    createCard('PICK_POCKET'), createCard('PICK_POCKET'), createCard('PICK_POCKET'),
+    // Utility (4)
+    createCard('CROSSOVER'), createCard('CROSSOVER'),
+    createCard('QUICK_PASS'), createCard('QUICK_PASS'),
   ],
 };
 
@@ -380,21 +375,16 @@ export const NEON_NETS: Team = {
     { id: 'op6', name: 'Vapor', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: 'assets/images/players/op6.jpeg' },
   ],
   deck: [
-    // Heavy on shooting
+    // Shots (9)
+    createCard('PULL_UP_JUMPER'), createCard('PULL_UP_JUMPER'), createCard('PULL_UP_JUMPER'),
     createCard('THREE_POINTER'), createCard('THREE_POINTER'), createCard('THREE_POINTER'),
-    createCard('PULL_UP_JUMPER'), createCard('PULL_UP_JUMPER'),
-    createCard('CATCH_AND_SHOOT'),
-    createCard('STEP_BACK_JUMPER'),
-    // Lots of playmaking to set up shots
+    createCard('QUICK_SHOT'), createCard('QUICK_SHOT'), createCard('QUICK_SHOT'),
+    // Playmaking (6)
     createCard('QUICK_PASS'), createCard('QUICK_PASS'), createCard('QUICK_PASS'),
-    createCard('DIME'),
-    createCard('NO_LOOK_PASS'),
-    createCard('DRIVE_AND_DISH'),
-    // Weaker on defense
-    createCard('CLOSEOUT'), createCard('CLOSEOUT'),
-    createCard('FAST_HANDS'), createCard('FAST_HANDS'),
-    // Utility
-    createCard('OFF_BALL_SCREEN'), createCard('OFF_BALL_SCREEN'),
-    createCard('CROSSOVER'),
+    createCard('CROSSOVER'), createCard('CROSSOVER'), createCard('CROSSOVER'),
+    // Defense (5)
+    createCard('CONTEST_SHOT'), createCard('CONTEST_SHOT'),
+    createCard('PICK_POCKET'), createCard('PICK_POCKET'),
+    createCard('INTERCEPT'),
   ],
 };

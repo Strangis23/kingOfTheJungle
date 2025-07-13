@@ -18,12 +18,9 @@ const MomentumTrack: React.FC<MomentumTrackProps> = ({ momentum }) => {
 
   const playerZoneLabel = getZoneLabel(momentum);
   const opponentZoneLabel = getZoneLabel(-momentum);
-  
-  const playerPulse = momentum >= 8 ? 'momentum-pulse-player' : '';
-  const opponentPulse = momentum <= -8 ? 'momentum-pulse-opponent' : '';
 
   return (
-    <div className="w-full max-w-2xl mx-auto my-2 p-2 bg-gray-900/70 rounded-lg shadow-inner">
+    <div className="w-full max-w-2xl mx-auto my-4 p-2 bg-gray-900 rounded-lg shadow-inner">
       <div className="flex justify-between items-center mb-1 text-sm font-bold">
         <span className={`transition-opacity duration-300 ${momentum <= -5 ? 'text-red-400 opacity-100' : 'opacity-50'}`}>
           {opponentZoneLabel || 'Opponent'}
@@ -33,7 +30,7 @@ const MomentumTrack: React.FC<MomentumTrackProps> = ({ momentum }) => {
           {playerZoneLabel || 'Player'}
         </span>
       </div>
-      <div className={`relative w-full h-6 bg-gray-700 rounded-full overflow-hidden border-2 border-gray-600 ${playerPulse} ${opponentPulse} transition-shadow duration-300`}>
+      <div className="relative w-full h-6 bg-gray-700 rounded-full overflow-hidden border-2 border-gray-600">
         <div className="absolute top-0 left-0 h-full w-full flex">
           <div className="w-1/2 h-full bg-red-800/50"></div>
           <div className="w-1/2 h-full bg-cyan-800/50"></div>

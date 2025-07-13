@@ -76,6 +76,9 @@ const PlayerDisplay: React.FC<PlayerDisplayProps> = ({ player, isSelectable, isS
     }
     if (isLongPressRef.current) {
       onLongPressEnd?.();
+      // Do not reset isLongPressRef here. This was the source of the bug.
+      // A long press that leaves the element should still be considered a long press
+      // and not trigger a click on mouseup. The ref is reset in handleInteractionEnd.
     }
   };
   

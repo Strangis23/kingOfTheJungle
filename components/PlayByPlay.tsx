@@ -16,9 +16,6 @@ const PlayByPlay: React.FC<PlayByPlayProps> = ({ logs, isOpen, onClose }) => {
   }, [logs, isOpen]);
 
   if (!isOpen) return null;
-  
-  // Display logs in chronological order (oldest at top, newest at bottom)
-  const reversedLogs = [...logs].reverse();
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 animate-fade-in" onClick={onClose}>
@@ -27,9 +24,8 @@ const PlayByPlay: React.FC<PlayByPlayProps> = ({ logs, isOpen, onClose }) => {
         onClick={e => e.stopPropagation()}
       >
         <h2 className="text-2xl font-bold text-yellow-400 mb-4 text-center">Play-by-Play</h2>
-        <div ref={logContainerRef} className="flex-grow bg-black/30 rounded p-2 overflow-y-auto font-mono text-gray-300 text-sm flex flex-col-reverse space-y-reverse space-y-1">
-           <div className="flex-grow"></div>
-           {logs.map((log, index) => <p key={logs.length - 1 - index}>{`> ${log}`}</p>)}
+        <div ref={logContainerRef} className="flex-grow bg-black/30 rounded p-2 overflow-y-auto font-mono text-gray-300 text-sm">
+          {logs.map((log, index) => <p key={index}>{`> ${log}`}</p>)}
         </div>
         <button 
           onClick={onClose} 

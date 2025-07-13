@@ -4,7 +4,6 @@ import { Card, Archetype, Keyword } from '../types';
 interface ActionCardProps {
   card: Card;
   isDisabled: boolean;
-  isPlayable?: boolean;
   displayCost: number;
   onClick?: (card: Card) => void;
   onLongPressStart?: (card: Card) => void;
@@ -23,7 +22,7 @@ const archetypeColorMap: { [key in Archetype]: { border: string, bg: string, tex
   [Archetype.Superstar]:          { border: 'border-yellow-400',   bg: 'bg-gradient-to-t from-black to-yellow-800/60',    text: 'text-yellow-200' },
 };
 
-const ActionCard: React.FC<ActionCardProps> = ({ card, onClick, isDisabled, isPlayable, displayCost, onLongPressStart, onLongPressEnd, isSelected, size = 'normal' }) => {
+const ActionCard: React.FC<ActionCardProps> = ({ card, onClick, isDisabled, displayCost, onLongPressStart, onLongPressEnd, isSelected, size = 'normal' }) => {
   const { border, bg, text } = archetypeColorMap[card.archetype];
   const isReaction = card.keywords?.includes(Keyword.Reaction);
   const costIsModified = card.hypeCost > 0 && displayCost < card.hypeCost;
@@ -38,8 +37,7 @@ const ActionCard: React.FC<ActionCardProps> = ({ card, onClick, isDisabled, isPl
   };
 
   const handleInteractionStart = (e: React.MouseEvent | React.TouchEvent) => {
-    // Allow long press on disabled cards for detail view
-    if (isDisabled && !onLongPressStart) return;
+    if (isDisabled) return;
     if ('button' in e && e.button !== 0) return;
     
     isLongPressRef.current = false;
@@ -50,17 +48,14 @@ const ActionCard: React.FC<ActionCardProps> = ({ card, onClick, isDisabled, isPl
   };
 
   const handleInteractionEnd = () => {
-    if (isDisabled && !onLongPressStart) return;
+    if (isDisabled) return;
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
     if (isLongPressRef.current) {
       onLongPressEnd?.();
     } else {
-      // only trigger click if not disabled
-      if (!isDisabled) {
-        handleClick();
-      }
+      handleClick();
     }
     isLongPressRef.current = false;
   };
@@ -71,6 +66,9 @@ const ActionCard: React.FC<ActionCardProps> = ({ card, onClick, isDisabled, isPl
     }
     if (isLongPressRef.current) {
         onLongPressEnd?.();
+        // Do not reset isLongPressRef here. This was the source of the bug.
+        // A long press that leaves the element should still be considered a long press
+        // and not trigger a click on mouseup. The ref is reset in handleInteractionEnd.
     }
   };
 
@@ -99,11 +97,10 @@ const ActionCard: React.FC<ActionCardProps> = ({ card, onClick, isDisabled, isPl
   
   const hoverEffect = !isDisabled && !isTiny ? 'hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/50' : '';
   const selectedEffect = isSelected ? 'ring-4 ring-yellow-400 ring-offset-2 ring-offset-gray-900' : '';
-  const playableClass = isPlayable ? 'is-playable' : '';
   
   return (
     <div
-      className={`relative ${containerClasses} bg-gray-900 ${border} shadow-lg text-white transform transition-all duration-200 ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'} ${hoverEffect} ${selectedEffect} ${playableClass} flex flex-col overflow-hidden flex-shrink-0`}
+      className={`relative ${containerClasses} bg-gray-900 ${border} shadow-lg text-white transform transition-all duration-200 ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'} ${hoverEffect} ${selectedEffect} flex flex-col overflow-hidden flex-shrink-0`}
       onMouseDown={handleInteractionStart}
       onMouseUp={handleInteractionEnd}
       onTouchStart={handleInteractionStart}

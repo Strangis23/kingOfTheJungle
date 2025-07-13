@@ -15,7 +15,6 @@
       }
       body {
         background-color: #1a202c; /* Equivalent to bg-gray-800 */
-        overflow: hidden;
       }
       @keyframes pop-in {
         0% { transform: scale(0.5); opacity: 0; }
@@ -63,43 +62,6 @@
       }
       .card-back {
         transform: rotateY(180deg);
-      }
-
-      /* Playable Card Glow */
-      @keyframes playable-glow {
-        0% { box-shadow: 0 0 5px rgba(56, 189, 248, 0.5), 0 0 0px #38bdf8; }
-        50% { box-shadow: 0 0 15px rgba(56, 189, 248, 0.8), 0 0 5px #38bdf8; }
-        100% { box-shadow: 0 0 5px rgba(56, 189, 248, 0.5), 0 0 0px #38bdf8; }
-      }
-      .is-playable {
-        animation: playable-glow 2.5s infinite ease-in-out;
-      }
-
-      /* Momentum Pulse */
-      @keyframes momentum-pulse-player {
-        0% { box-shadow: 0 0 8px #06b6d4, inset 0 0 5px #06b6d4; }
-        50% { box-shadow: 0 0 20px #06b6d4, inset 0 0 10px #06b6d4; }
-        100% { box-shadow: 0 0 8px #06b6d4, inset 0 0 5px #06b6d4; }
-      }
-      .momentum-pulse-player {
-        animation: momentum-pulse-player 1.5s infinite ease-in-out;
-      }
-       @keyframes momentum-pulse-opponent {
-        0% { box-shadow: 0 0 8px #f43f5e, inset 0 0 5px #f43f5e; }
-        50% { box-shadow: 0 0 20px #f43f5e, inset 0 0 10px #f43f5e; }
-        100% { box-shadow: 0 0 8px #f43f5e, inset 0 0 5px #f43f5e; }
-      }
-      .momentum-pulse-opponent {
-        animation: momentum-pulse-opponent 1.5s infinite ease-in-out;
-      }
-
-      /* Mini-Log Scroll */
-      .mini-log-entry {
-        animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-      }
-      @keyframes slide-in-bottom {
-        0% { transform: translateY(20px); opacity: 0; }
-        100% { transform: translateY(0); opacity: 1; }
       }
     </style>
   <script type="importmap">

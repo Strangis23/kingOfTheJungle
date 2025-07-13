@@ -45,10 +45,6 @@ const CollectionScreen: React.FC<CollectionScreenProps> = ({ roster, collection,
 
   const handleSaveDeck = () => {
     const newActiveDeck = collection.filter(c => selectedIds.has(c.id));
-    if (newActiveDeck.length < 20) {
-        alert("Your deck must contain at least 20 cards.");
-        return;
-    }
     onSaveDeck(newActiveDeck);
   };
   
@@ -120,7 +116,7 @@ const CollectionScreen: React.FC<CollectionScreenProps> = ({ roster, collection,
   return (
     <div className="w-full h-screen bg-gray-900 text-white flex flex-col">
       <CardDetailModal card={detailedCard} />
-      <PlayerDetailModal player={detailedPlayer} onEnd={() => setDetailedPlayer(null)} />
+      <PlayerDetailModal player={detailedPlayer} />
 
       {/* Header */}
       <div className="flex-shrink-0 p-4 sm:p-6 bg-black/20 border-b-2 border-gray-700 flex items-center justify-between sticky top-0 z-30">

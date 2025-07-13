@@ -56,7 +56,6 @@ export interface PlayerStatus {
 export interface Player {
   id: string;
   name: string;
-  description?: string;
   archetypes: Archetype[];
   rarity: 'Common' | 'Rare' | 'Legendary';
   statuses: PlayerStatus[];
@@ -119,8 +118,6 @@ export interface GameState {
   pendingCard: { card: Card; by: 'player' | 'opponent' } | null;
   isFifthGearActive: boolean;
   detailedCard: Card | null;
-  detailedPlayer: Player | null;
-  isLogOpen: boolean;
 }
 
 export enum MapNodeType {

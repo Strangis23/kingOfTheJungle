@@ -3,7 +3,6 @@ import { Player, Archetype } from '../types';
 
 interface PlayerDetailModalProps {
   player: Player | null;
-  onEnd: () => void;
 }
 
 const archetypeColorMap: { [key in Archetype]: { text: string, bg: string } } = {
@@ -22,24 +21,21 @@ const rarityStyles: { [key in 'Common' | 'Rare' | 'Legendary']: { text: string }
     Legendary: { text: 'text-yellow-400' },
 };
 
-const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({ player, onEnd }) => {
+const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({ player }) => {
   if (!player) return null;
 
   const rarityStyle = rarityStyles[player.rarity];
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 animate-fade-in" onMouseUp={onEnd} onTouchEnd={onEnd}>
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 animate-fade-in pointer-events-none">
       <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl flex flex-col sm:flex-row bg-gray-900 border-2 border-yellow-400 rounded-xl shadow-2xl overflow-hidden animate-pop-in">
         <img src={player.imageUrl} alt={player.name} className="w-full sm:w-1/2 h-64 sm:h-auto object-cover"/>
-        <div className="flex flex-col p-4 sm:p-6 justify-between flex-grow">
+        <div className="flex flex-col p-4 sm:p-6 justify-between">
           <div>
             <div className="flex justify-between items-start mb-2">
                 <h2 className="text-2xl sm:text-3xl font-bold text-white">{player.name}</h2>
                 <span className={`text-lg font-bold ${rarityStyle.text}`}>{player.rarity}</span>
             </div>
-             {player.description && (
-                <p className="text-gray-300 text-base sm:text-lg italic">"{player.description}"</p>
-             )}
           </div>
           <div className="mt-4 pt-4 border-t border-gray-700 space-y-3">
             {player.archetypes.map(archetype => {
