@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asphalt Ascendants</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Babel for in-browser JSX & TS transpilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      html, body, #root {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: #1a202c; /* Equivalent to bg-gray-800 */
+        overflow: hidden;
+      }
+      @keyframes pop-in {
+        0% { transform: scale(0.5); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      .animate-pop-in {
+        animation: pop-in 0.5s ease-out forwards;
+      }
+      @keyframes fade-in {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+      .animate-fade-in {
+        animation: fade-in 0.5s ease-out forwards;
+      }
+       @keyframes dramatic-text {
+        0% { transform: scale(0.8) translateY(20px); opacity: 0; text-shadow: none; }
+        50% { transform: scale(1.2); opacity: 1; text-shadow: 0 0 15px rgba(255, 255, 255, 0.7); }
+        100% { transform: scale(1); opacity: 1; text-shadow: none; }
+      }
+      .animate-dramatic-text {
+        animation: dramatic-text 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      }
+
+      /* Card Flip Animation */
+      .card-container {
+        perspective: 1000px;
+      }
+      .card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.7s;
+        transform-style: preserve-3d;
+      }
+      .card-container.flipped .card-inner {
+        transform: rotateY(180deg);
+      }
+      .card-front, .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      }
+      .card-back {
+        transform: rotateY(180deg);
+      }
+
+      /* Playable Card Glow */
+      @keyframes playable-glow {
+        0% { box-shadow: 0 0 5px rgba(56, 189, 248, 0.5), 0 0 0px #38bdf8; }
+        50% { box-shadow: 0 0 15px rgba(56, 189, 248, 0.8), 0 0 5px #38bdf8; }
+        100% { box-shadow: 0 0 5px rgba(56, 189, 248, 0.5), 0 0 0px #38bdf8; }
+      }
+      .is-playable {
+        animation: playable-glow 2.5s infinite ease-in-out;
+      }
+
+      /* Momentum Pulse */
+      @keyframes momentum-pulse-player {
+        0% { box-shadow: 0 0 8px #06b6d4, inset 0 0 5px #06b6d4; }
+        50% { box-shadow: 0 0 20px #06b6d4, inset 0 0 10px #06b6d4; }
+        100% { box-shadow: 0 0 8px #06b6d4, inset 0 0 5px #06b6d4; }
+      }
+      .momentum-pulse-player {
+        animation: momentum-pulse-player 1.5s infinite ease-in-out;
+      }
+       @keyframes momentum-pulse-opponent {
+        0% { box-shadow: 0 0 8px #f43f5e, inset 0 0 5px #f43f5e; }
+        50% { box-shadow: 0 0 20px #f43f5e, inset 0 0 10px #f43f5e; }
+        100% { box-shadow: 0 0 8px #f43f5e, inset 0 0 5px #f43f5e; }
+      }
+      .momentum-pulse-opponent {
+        animation: momentum-pulse-opponent 1.5s infinite ease-in-out;
+      }
+
+      /* Mini-Log Scroll */
+      .mini-log-entry {
+        animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      }
+      @keyframes slide-in-bottom {
+        0% { transform: translateY(20px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/client": "https://esm.sh/react-dom@^19.1.0/client",
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!-- Main application script, transpiled by Babel -->
+    <script type="text/babel" data-type="module" src="./index.tsx"></script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
