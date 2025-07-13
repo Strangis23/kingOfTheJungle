@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import GameScreen from './screens/GameScreen';
-import MapScreen from './screens/MapScreen';
-import PackOpeningScreen from './screens/PackOpeningScreen';
-import MainMenuScreen from './screens/MainMenuScreen';
-import TeamSelectionScreen from './screens/TeamSelectionScreen';
-import InitialSetupScreen from './screens/InitialSetupScreen';
-import CollectionScreen from './screens/CollectionScreen';
-import { Team, Playbook, Player, Card, MapNode, MapNodeType, CardPack } from './types';
-import { CONCRETE_CRUSHERS, NEON_NETS, PLAYBOOK_DATA } from './components/game-data';
+import GameScreen from './screens/GameScreen.tsx';
+import MapScreen from './screens/MapScreen.tsx';
+import PackOpeningScreen from './screens/PackOpeningScreen.tsx';
+import MainMenuScreen from './screens/MainMenuScreen.tsx';
+import TeamSelectionScreen from './screens/TeamSelectionScreen.tsx';
+import InitialSetupScreen from './screens/InitialSetupScreen.tsx';
+import CollectionScreen from './screens/CollectionScreen.tsx';
+import { Team, Playbook, Player, Card, MapNode, MapNodeType, CardPack } from './types.ts';
+import { CONCRETE_CRUSHERS, NEON_NETS, PLAYBOOK_DATA } from './components/game-data.ts';
 
 type GameView = 'loading' | 'initial_setup' | 'menu' | 'playbook' | 'team_select' | 'map' | 'game' | 'pack' | 'collection';
 

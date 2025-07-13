@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapNode, MapNodeType, Team } from '../types';
+import { MapNode, MapNodeType, Team } from '../types.ts';
 
 interface MapScreenProps {
   mapNodes: MapNode[];

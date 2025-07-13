@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
-import { Player, Card } from '../types';
-import PlayerDisplay from '../components/PlayerDisplay';
-import ActionCard from '../components/ActionCard';
-import CardDetailModal from '../components/CardDetailModal';
-import PlayerDetailModal from '../components/PlayerDetailModal';
+import { Player, Card } from '../types.ts';
+import PlayerDisplay from '../components/PlayerDisplay.tsx';
+import ActionCard from '../components/ActionCard.tsx';
+import CardDetailModal from '../components/CardDetailModal.tsx';
+import PlayerDetailModal from '../components/PlayerDetailModal.tsx';
 
 interface CollectionScreenProps {
   roster: Player[];

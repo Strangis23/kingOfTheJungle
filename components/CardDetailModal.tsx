@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Archetype, Keyword } from '../types';
+import { Card, Archetype, Keyword } from '../types.ts';
 
 interface CardDetailModalProps {
   card: Card | null;

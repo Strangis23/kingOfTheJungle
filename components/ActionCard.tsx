@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Card, Archetype, Keyword } from '../types';
+import { Card, Archetype, Keyword } from '../types.ts';
 
 interface ActionCardProps {
   card: Card;

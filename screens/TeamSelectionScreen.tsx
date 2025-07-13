@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Player, Team } from '../types';
-import PlayerDisplay from '../components/PlayerDisplay';
+import { Player, Team } from '../types.ts';
+import PlayerDisplay from '../components/PlayerDisplay.tsx';
 
 interface TeamSelectionScreenProps {
   roster: Player[];

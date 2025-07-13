@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Player, Card, CardPack } from '../types';
-import { generateCardPack } from '../components/game-data';
-import PlayerDisplay from '../components/PlayerDisplay';
-import ActionCard from '../components/ActionCard';
-import CardDetailModal from '../components/CardDetailModal';
+import { Player, Card, CardPack } from '../types.ts';
+import { generateCardPack } from '../components/game-data.ts';
+import PlayerDisplay from '../components/PlayerDisplay.tsx';
+import ActionCard from '../components/ActionCard.tsx';
+import CardDetailModal from '../components/CardDetailModal.tsx';
 
 
 interface InitialSetupScreenProps {

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Player, Archetype, PlayerStatusName } from '../types';
+import { Player, Archetype, PlayerStatusName } from '../types.ts';
 
 interface PlayerDisplayProps {
   player: Player;

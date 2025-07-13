@@ -1,6 +1,6 @@
 import React from 'react';
-import { ActionAnimation } from '../types';
-import ActionCard from './ActionCard';
+import { ActionAnimation } from '../types.ts';
+import ActionCard from './ActionCard.tsx';
 
 const outcomeTextMap: { [key in ActionAnimation['outcome']]: string } = {
   score: 'SWISH!',

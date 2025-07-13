@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { GameState, GamePhase, Team, Card, CardType, Player, ActionAnimation, Playbook, Keyword, Archetype } from '../types';
-import { PLAYBOOK_DATA, createCard } from '../components/game-data';
-import ActionCard from '../components/ActionCard';
-import PlayerDisplay from '../components/PlayerDisplay';
-import MomentumTrack from '../components/MomentumTrack';
-import EndGameModal from '../components/EndGameModal';
-import CourtDisplay from '../components/CourtDisplay';
-import PlayByPlay from '../components/PlayByPlay';
-import CardDetailModal from '../components/CardDetailModal';
+import { GameState, GamePhase, Team, Card, CardType, Player, ActionAnimation, Playbook, Keyword, Archetype } from '../types.ts';
+import { PLAYBOOK_DATA, createCard } from '../components/game-data.ts';
+import ActionCard from '../components/ActionCard.tsx';
+import PlayerDisplay from '../components/PlayerDisplay.tsx';
+import MomentumTrack from '../components/MomentumTrack.tsx';
+import EndGameModal from '../components/EndGameModal.tsx';
+import CourtDisplay from '../components/CourtDisplay.tsx';
+import PlayByPlay from '../components/PlayByPlay.tsx';
+import CardDetailModal from '../components/CardDetailModal.tsx';
 
 const shuffleDeck = <T,>(array: T[]): T[] => {
   const newArray = [...array];

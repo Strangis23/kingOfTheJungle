@@ -1,4 +1,4 @@
-import { Team, Player, Card, Archetype, CardType, Keyword, Playbook, CardPack } from '../types';
+import { Team, Player, Card, Archetype, CardType, Keyword, Playbook, CardPack } from '../types.ts';
 
 // --- CARDS ---
 

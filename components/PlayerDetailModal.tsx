@@ -1,5 +1,5 @@
 import React from 'react';
-import { Player, Archetype } from '../types';
+import { Player, Archetype } from '../types.ts';
 
 interface PlayerDetailModalProps {
   player: Player | null;
