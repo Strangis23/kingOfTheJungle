@@ -1,30 +1,17 @@
 import { Team, Player, Card, Archetype, CardType, Keyword, Playbook, CardPack } from '../types.ts';
 
-const archetypeColors: { [key in Archetype]: string } = {
-  [Archetype.Slasher]: '7F1D1D',
-  [Archetype.Sharpshooter]: '1E3A8A',
-  [Archetype.Playmaker]: 'B45309',
-  [Archetype.RimProtector]: '047857',
-  [Archetype.PerimeterDefender]: '166534',
-  [Archetype.OnBallDefender]: '3730A3',
-  [Archetype.Superstar]: 'D97706',
+const createCardImageUrl = (cardKey: string) => {
+  return `assets/cards/${cardKey}.png`;
 };
 
-const createCardImageUrl = (cardName: string, archetype: Archetype) => {
-    const color = archetypeColors[archetype] || '1E293B';
-    const text = encodeURIComponent(cardName);
-    return `https://placehold.co/300x200/${color}/FFFFFF/?text=${text}`;
-};
-
-const createPlayerImageUrl = (playerName: string, primaryArchetype: Archetype) => {
-    const color = archetypeColors[primaryArchetype] || '1E293B';
-    const text = encodeURIComponent(playerName);
-    return `https://placehold.co/200x280/${color}/FFFFFF/?text=${text}`;
+const createPlayerImageUrl = (playerName: string) => {
+  const filename = playerName.toUpperCase().replace(/ /g, '_').replace(/"/g, '').replace(/'/g, '');
+  return `assets/players/${filename}.png`;
 };
 
 const createCourtImageUrl = (courtName: string) => {
-    const text = encodeURIComponent(courtName);
-    return `https://placehold.co/1280x720/222222/555555/?text=${text}`;
+  const filename = courtName.toUpperCase().replace(/ /g, '_');
+  return `assets/courts/${filename}.png`;
 };
 
 // --- CARDS ---
@@ -123,7 +110,7 @@ const CARDS_DATA: { [key: string]: Omit<Card, 'id' | 'effect' | 'imageUrl'> & { 
   COMMUNICATE: { name: 'Communicate', rarity: 'Common', hypeCost: 1, type: CardType.Utility, archetype: Archetype.PerimeterDefender, description: 'Gain 3 Grit for your next defensive possession.' },
   FORCE_THE_EXTRA_PASS: { name: 'Force the Extra Pass', rarity: 'Common', hypeCost: 0, gritCost: 1, type: CardType.Defense, archetype: Archetype.PerimeterDefender, description: 'Reaction to: Shot. Negate the shot. The opponent draws a card instead.', keywords: [Keyword.Reaction], trigger: [CardType.Shot] },
   CLOSE_THE_GAP: { name: 'Close the Gap', rarity: 'Common', hypeCost: 0, type: CardType.Utility, archetype: Archetype.PerimeterDefender, description: 'Exhaust: Gain 1 Grit.', keywords: [Keyword.Exhaust] },
-  
+
   // --- Rim Protector Cards ---
   VICIOUS_BLOCK: { name: 'Vicious Block', rarity: 'Rare', hypeCost: 0, gritCost: 2, type: CardType.Defense, archetype: Archetype.RimProtector, description: 'Reaction to: Shot. Negate the action. Gain Possession.', keywords: [Keyword.Reaction], trigger: [CardType.Shot] },
   BLOCK_PARTY: { name: 'Block Party', rarity: 'Legendary', hypeCost: 4, type: CardType.Utility, archetype: Archetype.RimProtector, description: "For the opponent's next turn, your successful blocks also grant you possession." },
@@ -157,7 +144,7 @@ export const createCard = (cardKey: string): Card => {
   return {
     id: `${cardKey}-${Math.random()}`,
     ...cardData,
-    imageUrl: createCardImageUrl(cardData.name, cardData.archetype),
+    imageUrl: createCardImageUrl(cardKey),
     effect: (gameState, payload) => gameState // Placeholder effect
   };
 };
@@ -173,196 +160,196 @@ export const PLAYBOOK_DATA: { [key in Playbook]: { name: string, description: st
 const ALL_PLAYERS: Player[] = [
   // == Existing Players ==
   // Commons (4)
-  { id: 'p1', name: 'Leo "The Lion" Chen', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Leo "The Lion" Chen', Archetype.Slasher) },
-  { id: 'p2', name: 'Maya "Deadeye" Singh', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Maya "Deadeye" Singh', Archetype.Sharpshooter) },
-  { id: 'p3', name: 'Sam "Dime" Jones', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Sam "Dime" Jones', Archetype.Playmaker) },
-  { id: 'p4', name: 'Kenji "The Wall" Tanaka', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Kenji "The Wall" Tanaka', Archetype.RimProtector) },
+  { id: 'p1', name: 'Leo "The Lion" Chen', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Leo "The Lion" Chen') },
+  { id: 'p2', name: 'Maya "Deadeye" Singh', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Maya "Deadeye" Singh') },
+  { id: 'p3', name: 'Sam "Dime" Jones', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Sam "Dime" Jones') },
+  { id: 'p4', name: 'Kenji "The Wall" Tanaka', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Kenji "The Wall" Tanaka') },
   // Rares (3)
-  { id: 'player-rare-1', name: 'Isabelle "Matrix" Moreau', archetypes: [Archetype.Playmaker, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Isabelle "Matrix" Moreau', Archetype.Playmaker) },
-  { id: 'player-rare-2', name: 'Jaxson "Apex" Williams', archetypes: [Archetype.Slasher, Archetype.RimProtector], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Jaxson "Apex" Williams', Archetype.Slasher) },
-  { id: 'player-rare-3', name: 'Caden "Tripod" Lee', archetypes: [Archetype.Sharpshooter, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Caden "Tripod" Lee', Archetype.Sharpshooter) },
+  { id: 'player-rare-1', name: 'Isabelle "Matrix" Moreau', archetypes: [Archetype.Playmaker, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Isabelle "Matrix" Moreau') },
+  { id: 'player-rare-2', name: 'Jaxson "Apex" Williams', archetypes: [Archetype.Slasher, Archetype.RimProtector], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Jaxson "Apex" Williams') },
+  { id: 'player-rare-3', name: 'Caden "Tripod" Lee', archetypes: [Archetype.Sharpshooter, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Caden "Tripod" Lee') },
   // Legendary (1)
-  { id: 'player-legend-1', name: 'Kaito "Starlight" Ito', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Kaito "Starlight" Ito', Archetype.Superstar) },
+  { id: 'player-legend-1', name: 'Kaito "Starlight" Ito', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Kaito "Starlight" Ito') },
 
   // == New Commons (56) ==
   // Slashers
-  { id: 'c1', name: 'Dante "Dash" Jones', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Dante "Dash" Jones', Archetype.Slasher) },
-  { id: 'c2', name: 'Aisha "Sky" Williams', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Aisha "Sky" Williams', Archetype.Slasher) },
-  { id: 'c3', name: 'Marco "Momentum" Petrov', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Marco "Momentum" Petrov', Archetype.Slasher) },
-  { id: 'c4', name: 'Tariq "The Blur" Ali', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Tariq "The Blur" Ali', Archetype.Slasher) },
-  { id: 'c5', name: 'Keisha "Charge" Brown', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Keisha "Charge" Brown', Archetype.Slasher) },
-  { id: 'c6', name: 'Ivan "The Invader" Kuznetsov', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Ivan "The Invader" Kuznetsov', Archetype.Slasher) },
-  { id: 'c7', name: 'Lila "Leap" Chen', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Lila "Leap" Chen', Archetype.Slasher) },
-  { id: 'c8', name: 'Omar "Orbit" Hassan', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Omar "Orbit" Hassan', Archetype.Slasher) },
-  { id: 'c9', name: 'Nadia "Nitro" Kim', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Nadia "Nitro" Kim', Archetype.Slasher) },
+  { id: 'c1', name: 'Dante "Dash" Jones', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Dante "Dash" Jones') },
+  { id: 'c2', name: 'Aisha "Sky" Williams', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Aisha "Sky" Williams') },
+  { id: 'c3', name: 'Marco "Momentum" Petrov', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Marco "Momentum" Petrov') },
+  { id: 'c4', name: 'Tariq "The Blur" Ali', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Tariq "The Blur" Ali') },
+  { id: 'c5', name: 'Keisha "Charge" Brown', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Keisha "Charge" Brown') },
+  { id: 'c6', name: 'Ivan "The Invader" Kuznetsov', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Ivan "The Invader" Kuznetsov') },
+  { id: 'c7', name: 'Lila "Leap" Chen', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Lila "Leap" Chen') },
+  { id: 'c8', name: 'Omar "Orbit" Hassan', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Omar "Orbit" Hassan') },
+  { id: 'c9', name: 'Nadia "Nitro" Kim', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Nadia "Nitro" Kim') },
   // Sharpshooters
-  { id: 'c10', name: 'Ray "Rainman" Allen Jr.', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Ray "Rainman" Allen Jr.', Archetype.Sharpshooter) },
-  { id: 'c11', name: 'Brenda "Bullseye" Lee', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Brenda "Bullseye" Lee', Archetype.Sharpshooter) },
-  { id: 'c12', name: 'Sung "Swish" Park', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Sung "Swish" Park', Archetype.Sharpshooter) },
-  { id: 'c13', name: 'Fiona "Flames" O\'Malley', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Fiona "Flames" O\'Malley', Archetype.Sharpshooter) },
-  { id: 'c14', name: 'Carlos "Comet" Garcia', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Carlos "Comet" Garcia', Archetype.Sharpshooter) },
-  { id: 'c15', name: 'Heidi "Hailstorm" Schmidt', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Heidi "Hailstorm" Schmidt', Archetype.Sharpshooter) },
-  { id: 'c16', name: 'Dev "Downtown" Patel', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Dev "Downtown" Patel', Archetype.Sharpshooter) },
-  { id: 'c17', name: 'Katya "Cannon" Ivanova', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Katya "Cannon" Ivanova', Archetype.Sharpshooter) },
-  { id: 'c18', name: 'Wei "Whisper" Zhang', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Wei "Whisper" Zhang', Archetype.Sharpshooter) },
+  { id: 'c10', name: 'Ray "Rainman" Allen Jr.', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Ray "Rainman" Allen Jr.') },
+  { id: 'c11', name: 'Brenda "Bullseye" Lee', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Brenda "Bullseye" Lee') },
+  { id: 'c12', name: 'Sung "Swish" Park', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Sung "Swish" Park') },
+  { id: 'c13', name: 'Fiona "Flames" O\'Malley', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Fiona "Flames" O\'Malley') },
+  { id: 'c14', name: 'Carlos "Comet" Garcia', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Carlos "Comet" Garcia') },
+  { id: 'c15', name: 'Heidi "Hailstorm" Schmidt', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Heidi "Hailstorm" Schmidt') },
+  { id: 'c16', name: 'Dev "Downtown" Patel', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Dev "Downtown" Patel') },
+  { id: 'c17', name: 'Katya "Cannon" Ivanova', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Katya "Cannon" Ivanova') },
+  { id: 'c18', name: 'Wei "Whisper" Zhang', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Wei "Whisper" Zhang') },
   // Playmakers
-  { id: 'c19', name: 'Andre "Maestro" Dubois', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Andre "Maestro" Dubois', Archetype.Playmaker) },
-  { id: 'c20', name: 'Chloe "Connect" Nguyen', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Chloe "Connect" Nguyen', Archetype.Playmaker) },
-  { id: 'c21', name: 'Pedro "Puppetmaster" Silva', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Pedro "Puppetmaster" Silva', Archetype.Playmaker) },
-  { id: 'c22', name: 'Yuki "Vision" Sato', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Yuki "Vision" Sato', Archetype.Playmaker) },
-  { id: 'c23', name: 'Fatima "Flow" Khan', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Fatima "Flow" Khan', Archetype.Playmaker) },
-  { id: 'c24', name: 'Leo "Link" Rossi', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Leo "Link" Rossi', Archetype.Playmaker) },
-  { id: 'c25', name: 'Jada "The General" Davis', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Jada "The General" Davis', Archetype.Playmaker) },
-  { id: 'c26', name: 'Viktor "Vector" Novak', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Viktor "Vector" Novak', Archetype.Playmaker) },
-  { id: 'c27', name: 'Zoe "Zenith" Bell', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Zoe "Zenith" Bell', Archetype.Playmaker) },
+  { id: 'c19', name: 'Andre "Maestro" Dubois', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Andre "Maestro" Dubois') },
+  { id: 'c20', name: 'Chloe "Connect" Nguyen', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Chloe "Connect" Nguyen') },
+  { id: 'c21', name: 'Pedro "Puppetmaster" Silva', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Pedro "Puppetmaster" Silva') },
+  { id: 'c22', name: 'Yuki "Vision" Sato', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Yuki "Vision" Sato') },
+  { id: 'c23', name: 'Fatima "Flow" Khan', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Fatima "Flow" Khan') },
+  { id: 'c24', name: 'Leo "Link" Rossi', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Leo "Link" Rossi') },
+  { id: 'c25', name: 'Jada "The General" Davis', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Jada "The General" Davis') },
+  { id: 'c26', name: 'Viktor "Vector" Novak', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Viktor "Vector" Novak') },
+  { id: 'c27', name: 'Zoe "Zenith" Bell', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Zoe "Zenith" Bell') },
   // Rim Protectors
-  { id: 'c28', name: 'Dmitri "The Denier" Volkov', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Dmitri "The Denier" Volkov', Archetype.RimProtector) },
-  { id: 'c29', name: 'Bao "The Barricade" Tran', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Bao "The Barricade" Tran', Archetype.RimProtector) },
-  { id: 'c30', name: 'Hannah "Highrise" Johnson', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Hannah "Highrise" Johnson', Archetype.RimProtector) },
-  { id: 'c31', name: 'Gunnar "The Gatekeeper" Olsen', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Gunnar "The Gatekeeper" Olsen', Archetype.RimProtector) },
-  { id: 'c32', name: 'Chika "Ceiling" Adebayo', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Chika "Ceiling" Adebayo', Archetype.RimProtector) },
-  { id: 'c33', name: 'Sergei "Summit" Popov', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Sergei "Summit" Popov', Archetype.RimProtector) },
-  { id: 'c34', name: 'Isla "The Island" McGregor', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Isla "The Island" McGregor', Archetype.RimProtector) },
-  { id: 'c35', name: 'Mateo "Mountain" Diaz', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Mateo "Mountain" Diaz', Archetype.RimProtector) },
-  { id: 'c36', name: 'Priya "Peak" Sharma', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Priya "Peak" Sharma', Archetype.RimProtector) },
-  { id: 'c37', name: 'Boris "The Bear" Orlov', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Boris "The Bear" Orlov', Archetype.RimProtector) },
+  { id: 'c28', name: 'Dmitri "The Denier" Volkov', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Dmitri "The Denier" Volkov') },
+  { id: 'c29', name: 'Bao "The Barricade" Tran', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Bao "The Barricade" Tran') },
+  { id: 'c30', name: 'Hannah "Highrise" Johnson', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Hannah "Highrise" Johnson') },
+  { id: 'c31', name: 'Gunnar "The Gatekeeper" Olsen', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Gunnar "The Gatekeeper" Olsen') },
+  { id: 'c32', name: 'Chika "Ceiling" Adebayo', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Chika "Ceiling" Adebayo') },
+  { id: 'c33', name: 'Sergei "Summit" Popov', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Sergei "Summit" Popov') },
+  { id: 'c34', name: 'Isla "The Island" McGregor', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Isla "The Island" McGregor') },
+  { id: 'c35', name: 'Mateo "Mountain" Diaz', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Mateo "Mountain" Diaz') },
+  { id: 'c36', name: 'Priya "Peak" Sharma', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Priya "Peak" Sharma') },
+  { id: 'c37', name: 'Boris "The Bear" Orlov', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Boris "The Bear" Orlov') },
   // Perimeter Defenders
-  { id: 'c38', name: 'Gwen "Guardian" Evans', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Gwen "Guardian" Evans', Archetype.PerimeterDefender) },
-  { id: 'c39', name: 'Hector "Hawk" Morales', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Hector "Hawk" Morales', Archetype.PerimeterDefender) },
-  { id: 'c40', name: 'Ingrid "The Interceptor" Larsen', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Ingrid "The Interceptor" Larsen', Archetype.PerimeterDefender) },
-  { id: 'c41', name: 'Jin "The Shadow" Kim', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Jin "The Shadow" Kim', Archetype.PerimeterDefender) },
-  { id: 'c42', name: 'Kara "Kestrel" Wallace', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Kara "Kestrel" Wallace', Archetype.PerimeterDefender) },
-  { id: 'c43', name: 'Luis "Lock" Fernandez', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Luis "Lock" Fernandez', Archetype.PerimeterDefender) },
-  { id: 'c44', name: 'Mina "Mirage" Gupta', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Mina "Mirage" Gupta', Archetype.PerimeterDefender) },
-  { id: 'c45', name: 'Niko "Net" Jansson', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Niko "Net" Jansson', Archetype.PerimeterDefender) },
-  { id: 'c46', name: 'Olga "The Owl" Petrova', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Olga "The Owl" Petrova', Archetype.PerimeterDefender) },
-  { id: 'c47', name: 'Ravi "Raptor" Kumar', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Ravi "Raptor" Kumar', Archetype.PerimeterDefender) },
+  { id: 'c38', name: 'Gwen "Guardian" Evans', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Gwen "Guardian" Evans') },
+  { id: 'c39', name: 'Hector "Hawk" Morales', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Hector "Hawk" Morales') },
+  { id: 'c40', name: 'Ingrid "The Interceptor" Larsen', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Ingrid "The Interceptor" Larsen') },
+  { id: 'c41', name: 'Jin "The Shadow" Kim', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Jin "The Shadow" Kim') },
+  { id: 'c42', name: 'Kara "Kestrel" Wallace', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Kara "Kestrel" Wallace') },
+  { id: 'c43', name: 'Luis "Lock" Fernandez', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Luis "Lock" Fernandez') },
+  { id: 'c44', name: 'Mina "Mirage" Gupta', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Mina "Mirage" Gupta') },
+  { id: 'c45', name: 'Niko "Net" Jansson', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Niko "Net" Jansson') },
+  { id: 'c46', name: 'Olga "The Owl" Petrova', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Olga "The Owl" Petrova') },
+  { id: 'c47', name: 'Ravi "Raptor" Kumar', archetypes: [Archetype.PerimeterDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Ravi "Raptor" Kumar') },
   // On-Ball Defenders
-  { id: 'c48', name: 'Sasha "The Static" Belov', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Sasha "The Static" Belov', Archetype.OnBallDefender) },
-  { id: 'c49', name: 'Tiana "The Trap" Wright', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Tiana "The Trap" Wright', Archetype.OnBallDefender) },
-  { id: 'c50', name: 'Uri "The Urchin" Cohen', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Uri "The Urchin" Cohen', Archetype.OnBallDefender) },
-  { id: 'c51', name: 'Vera "Vise" Romano', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Vera "Vise" Romano', Archetype.OnBallDefender) },
-  { id: 'c52', name: 'Will "The Web" Jackson', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Will "The Web" Jackson', Archetype.OnBallDefender) },
-  { id: 'c53', name: 'Xena "X-Factor" Li', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Xena "X-Factor" Li', Archetype.OnBallDefender) },
-  { id: 'c54', name: 'Yara "Yardstick" Al-Jamil', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Yara "Yardstick" Al-Jamil', Archetype.OnBallDefender) },
-  { id: 'c55', name: 'Zane "The Zone" Miller', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Zane "The Zone" Miller', Archetype.OnBallDefender) },
-  { id: 'c56', name: 'Anika "Anchor" Sharma', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Anika "Anchor" Sharma', Archetype.OnBallDefender) },
+  { id: 'c48', name: 'Sasha "The Static" Belov', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Sasha "The Static" Belov') },
+  { id: 'c49', name: 'Tiana "The Trap" Wright', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Tiana "The Trap" Wright') },
+  { id: 'c50', name: 'Uri "The Urchin" Cohen', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Uri "The Urchin" Cohen') },
+  { id: 'c51', name: 'Vera "Vise" Romano', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Vera "Vise" Romano') },
+  { id: 'c52', name: 'Will "The Web" Jackson', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Will "The Web" Jackson') },
+  { id: 'c53', name: 'Xena "X-Factor" Li', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Xena "X-Factor" Li') },
+  { id: 'c54', name: 'Yara "Yardstick" Al-Jamil', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Yara "Yardstick" Al-Jamil') },
+  { id: 'c55', name: 'Zane "The Zone" Miller', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Zane "The Zone" Miller') },
+  { id: 'c56', name: 'Anika "Anchor" Sharma', archetypes: [Archetype.OnBallDefender], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Anika "Anchor" Sharma') },
 
   // == New Rares (27) ==
-  { id: 'r1', name: 'Elias "Echo" Vance', archetypes: [Archetype.Playmaker, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Elias "Echo" Vance', Archetype.Playmaker) },
-  { id: 'r2', name: 'Bianca "Blitz" Romano', archetypes: [Archetype.Slasher, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Bianca "Blitz" Romano', Archetype.Slasher) },
-  { id: 'r3', name: 'Cyrus "The Cyclone" Khan', archetypes: [Archetype.Slasher, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Cyrus "The Cyclone" Khan', Archetype.Slasher) },
-  { id: 'r4', name: 'Daria "The Fortress" Ivanova', archetypes: [Archetype.RimProtector, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Daria "The Fortress" Ivanova', Archetype.RimProtector) },
-  { id: 'r5', name: 'Finn "The Finisher" O\'Connell', archetypes: [Archetype.Slasher, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Finn "The Finisher" O\'Connell', Archetype.Slasher) },
-  { id: 'r6', name: 'Gabriela "Gravity" Santos', archetypes: [Archetype.RimProtector, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Gabriela "Gravity" Santos', Archetype.RimProtector) },
-  { id: 'r7', name: 'Hiroki "The Hurricane" Tanaka', archetypes: [Archetype.OnBallDefender, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Hiroki "The Hurricane" Tanaka', Archetype.OnBallDefender) },
-  { id: 'r8', name: 'Imani "Impact" Adebayo', archetypes: [Archetype.RimProtector, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Imani "Impact" Adebayo', Archetype.RimProtector) },
-  { id: 'r9', name: 'Javier "Jaguar" Reyes', archetypes: [Archetype.PerimeterDefender, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Javier "Jaguar" Reyes', Archetype.PerimeterDefender) },
-  { id: 'r10', name: 'Kira "The Key" Volkov', archetypes: [Archetype.OnBallDefender, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Kira "The Key" Volkov', Archetype.OnBallDefender) },
-  { id: 'r11', name: 'Liam "Longshot" Murphy', archetypes: [Archetype.Sharpshooter, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Liam "Longshot" Murphy', Archetype.Sharpshooter) },
-  { id: 'r12', name: 'Mona "The Magnet" Al-Farsi', archetypes: [Archetype.PerimeterDefender, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Mona "The Magnet" Al-Farsi', Archetype.PerimeterDefender) },
-  { id: 'r13', name: 'Nikolai "The Navigator" Orlov', archetypes: [Archetype.Playmaker, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Nikolai "The Navigator" Orlov', Archetype.Playmaker) },
-  { id: 'r14', name: 'Owen "The Overlord" Davies', archetypes: [Archetype.RimProtector, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Owen "The Overlord" Davies', Archetype.RimProtector) },
-  { id: 'r15', name: 'Priya "The Phantom" Singh', archetypes: [Archetype.OnBallDefender, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Priya "The Phantom" Singh', Archetype.OnBallDefender) },
-  { id: 'r16', name: 'Quinn "Quake" Taylor', archetypes: [Archetype.Slasher, Archetype.RimProtector], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Quinn "Quake" Taylor', Archetype.Slasher) },
-  { id: 'r17', name: 'Rohan "The Rifle" Joshi', archetypes: [Archetype.Sharpshooter, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Rohan "The Rifle" Joshi', Archetype.Sharpshooter) },
-  { id: 'r18', name: 'Seraphina "The Sage" Dubois', archetypes: [Archetype.Playmaker, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Seraphina "The Sage" Dubois', Archetype.Playmaker) },
-  { id: 'r19', name: 'Titus "Titan" Wallace', archetypes: [Archetype.RimProtector, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Titus "Titan" Wallace', Archetype.RimProtector) },
-  { id: 'r20', name: 'Uma "The Uprising" Chen', archetypes: [Archetype.PerimeterDefender, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Uma "The Uprising" Chen', Archetype.PerimeterDefender) },
-  { id: 'r21', name: 'Victor "Vortex" Morales', archetypes: [Archetype.Slasher, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Victor "Vortex" Morales', Archetype.Slasher) },
-  { id: 'r22', name: 'Willa "The Warden" Kowalski', archetypes: [Archetype.RimProtector, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Willa "The Warden" Kowalski', Archetype.RimProtector) },
-  { id: 'r23', name: 'Xavier "X-Ray" Johnson', archetypes: [Archetype.Sharpshooter, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Xavier "X-Ray" Johnson', Archetype.Sharpshooter) },
-  { id: 'r24', name: 'Yara "The Yoke" Schmidt', archetypes: [Archetype.OnBallDefender, Archetype.RimProtector], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Yara "The Yoke" Schmidt', Archetype.OnBallDefender) },
-  { id: 'r25', name: 'Zane "The Zealot" Al-Jamil', archetypes: [Archetype.PerimeterDefender, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Zane "The Zealot" Al-Jamil', Archetype.PerimeterDefender) },
-  { id: 'r26', name: 'Adrian "The Artist" Bell', archetypes: [Archetype.Playmaker, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Adrian "The Artist" Bell', Archetype.Playmaker) },
-  { id: 'r27', name: 'Cassia "The Comet" Li', archetypes: [Archetype.Sharpshooter, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Cassia "The Comet" Li', Archetype.Sharpshooter) },
-  
+  { id: 'r1', name: 'Elias "Echo" Vance', archetypes: [Archetype.Playmaker, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Elias "Echo" Vance') },
+  { id: 'r2', name: 'Bianca "Blitz" Romano', archetypes: [Archetype.Slasher, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Bianca "Blitz" Romano') },
+  { id: 'r3', name: 'Cyrus "The Cyclone" Khan', archetypes: [Archetype.Slasher, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Cyrus "The Cyclone" Khan') },
+  { id: 'r4', name: 'Daria "The Fortress" Ivanova', archetypes: [Archetype.RimProtector, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Daria "The Fortress" Ivanova') },
+  { id: 'r5', name: 'Finn "The Finisher" O\'Connell', archetypes: [Archetype.Slasher, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Finn "The Finisher" O\'Connell') },
+  { id: 'r6', name: 'Gabriela "Gravity" Santos', archetypes: [Archetype.RimProtector, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Gabriela "Gravity" Santos') },
+  { id: 'r7', name: 'Hiroki "The Hurricane" Tanaka', archetypes: [Archetype.OnBallDefender, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Hiroki "The Hurricane" Tanaka') },
+  { id: 'r8', name: 'Imani "Impact" Adebayo', archetypes: [Archetype.RimProtector, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Imani "Impact" Adebayo') },
+  { id: 'r9', name: 'Javier "Jaguar" Reyes', archetypes: [Archetype.PerimeterDefender, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Javier "Jaguar" Reyes') },
+  { id: 'r10', name: 'Kira "The Key" Volkov', archetypes: [Archetype.OnBallDefender, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Kira "The Key" Volkov') },
+  { id: 'r11', name: 'Liam "Longshot" Murphy', archetypes: [Archetype.Sharpshooter, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Liam "Longshot" Murphy') },
+  { id: 'r12', name: 'Mona "The Magnet" Al-Farsi', archetypes: [Archetype.PerimeterDefender, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Mona "The Magnet" Al-Farsi') },
+  { id: 'r13', name: 'Nikolai "The Navigator" Orlov', archetypes: [Archetype.Playmaker, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Nikolai "The Navigator" Orlov') },
+  { id: 'r14', name: 'Owen "The Overlord" Davies', archetypes: [Archetype.RimProtector, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Owen "The Overlord" Davies') },
+  { id: 'r15', name: 'Priya "The Phantom" Singh', archetypes: [Archetype.OnBallDefender, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Priya "The Phantom" Singh') },
+  { id: 'r16', name: 'Quinn "Quake" Taylor', archetypes: [Archetype.Slasher, Archetype.RimProtector], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Quinn "Quake" Taylor') },
+  { id: 'r17', name: 'Rohan "The Rifle" Joshi', archetypes: [Archetype.Sharpshooter, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Rohan "The Rifle" Joshi') },
+  { id: 'r18', name: 'Seraphina "The Sage" Dubois', archetypes: [Archetype.Playmaker, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Seraphina "The Sage" Dubois') },
+  { id: 'r19', name: 'Titus "Titan" Wallace', archetypes: [Archetype.RimProtector, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Titus "Titan" Wallace') },
+  { id: 'r20', name: 'Uma "The Uprising" Chen', archetypes: [Archetype.PerimeterDefender, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Uma "The Uprising" Chen') },
+  { id: 'r21', name: 'Victor "Vortex" Morales', archetypes: [Archetype.Slasher, Archetype.Playmaker], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Victor "Vortex" Morales') },
+  { id: 'r22', name: 'Willa "The Warden" Kowalski', archetypes: [Archetype.RimProtector, Archetype.PerimeterDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Willa "The Warden" Kowalski') },
+  { id: 'r23', name: 'Xavier "X-Ray" Johnson', archetypes: [Archetype.Sharpshooter, Archetype.OnBallDefender], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Xavier "X-Ray" Johnson') },
+  { id: 'r24', name: 'Yara "The Yoke" Schmidt', archetypes: [Archetype.OnBallDefender, Archetype.RimProtector], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Yara "The Yoke" Schmidt') },
+  { id: 'r25', name: 'Zane "The Zealot" Al-Jamil', archetypes: [Archetype.PerimeterDefender, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Zane "The Zealot" Al-Jamil') },
+  { id: 'r26', name: 'Adrian "The Artist" Bell', archetypes: [Archetype.Playmaker, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Adrian "The Artist" Bell') },
+  { id: 'r27', name: 'Cassia "The Comet" Li', archetypes: [Archetype.Sharpshooter, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Cassia "The Comet" Li') },
+
   // == New Legendaries ("Superstars") (9) ==
-  { id: 'l1', name: 'Orion "The Oracle" Hayes', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Orion "The Oracle" Hayes', Archetype.Superstar) },
-  { id: 'l2', name: 'Serena "The Sovereign" Cruz', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Serena "The Sovereign" Cruz', Archetype.Superstar) },
-  { id: 'l3', name: 'Maximus "The Monarch" Antonov', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Maximus "The Monarch" Antonov', Archetype.Superstar) },
-  { id: 'l4', name: 'Astra "The Anomaly" Novak', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Astra "The Anomaly" Novak', Archetype.Superstar) },
-  { id: 'l5', name: 'Ronin "The Ronin" Kim', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Ronin "The Ronin" Kim', Archetype.Superstar) },
-  { id: 'l6', name: 'Celeste "The Celestial" Moreau', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Celeste "The Celestial" Moreau', Archetype.Superstar) },
-  { id: 'l7', name: 'Goliath "The Gatecrasher" Goliath', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Goliath "The Gatecrasher" Goliath', Archetype.Superstar) },
-  { id: 'l8', name: 'Vesper "The Viper" Lin', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Vesper "The Viper" Lin', Archetype.Superstar) },
-  { id: 'l9', name: 'Silas "The Silent" Kane', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Silas "The Silent" Kane', Archetype.Superstar) },
+  { id: 'l1', name: 'Orion "The Oracle" Hayes', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Orion "The Oracle" Hayes') },
+  { id: 'l2', name: 'Serena "The Sovereign" Cruz', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Serena "The Sovereign" Cruz') },
+  { id: 'l3', name: 'Maximus "The Monarch" Antonov', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Maximus "The Monarch" Antonov') },
+  { id: 'l4', name: 'Astra "The Anomaly" Novak', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Astra "The Anomaly" Novak') },
+  { id: 'l5', name: 'Ronin "The Ronin" Kim', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Ronin "The Ronin" Kim') },
+  { id: 'l6', name: 'Celeste "The Celestial" Moreau', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Celeste "The Celestial" Moreau') },
+  { id: 'l7', name: 'Goliath "The Gatecrasher" Goliath', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Goliath "The Gatecrasher" Goliath') },
+  { id: 'l8', name: 'Vesper "The Viper" Lin', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Vesper "The Viper" Lin') },
+  { id: 'l9', name: 'Silas "The Silent" Kane', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Silas "The Silent" Kane') },
 ];
 
 
 const CARD_POOL_KEYS = Object.keys(CARDS_DATA).filter(key => !CARDS_DATA[key].isSignatureMove);
 
 const shuffleArray = <T>(array: T[]): T[] => {
-    const newArray = [...array];
-    for (let i = newArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-    }
-    return newArray;
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
 };
 
 export const generateCardPack = (rarityLock: 'Common' | null = null): CardPack => {
-    // --- Player Selection ---
-    let availablePlayers: Player[];
+  // --- Player Selection ---
+  let availablePlayers: Player[];
 
-    if (rarityLock === 'Common') {
-        availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Common');
-    } else {
-        // Rarity distribution: 80% Common, 15% Rare, 5% Legendary
-        const playerRoll = Math.random();
-        if (playerRoll < 0.05) { // 5% for Legendary
-            availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Legendary');
-        } else if (playerRoll < 0.20) { // 15% for Rare
-            availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Rare');
-        } else { // 80% for Common
-            availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Common');
-        }
+  if (rarityLock === 'Common') {
+    availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Common');
+  } else {
+    // Rarity distribution: 80% Common, 15% Rare, 5% Legendary
+    const playerRoll = Math.random();
+    if (playerRoll < 0.05) { // 5% for Legendary
+      availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Legendary');
+    } else if (playerRoll < 0.20) { // 15% for Rare
+      availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Rare');
+    } else { // 80% for Common
+      availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Common');
     }
+  }
 
-    if (availablePlayers.length === 0) availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Common');
-    if (availablePlayers.length === 0) availablePlayers = ALL_PLAYERS;
-    
-    const player = availablePlayers[Math.floor(Math.random() * availablePlayers.length)];
+  if (availablePlayers.length === 0) availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Common');
+  if (availablePlayers.length === 0) availablePlayers = ALL_PLAYERS;
 
-    // --- Card Selection ---
-    const allCardsPool = Object.keys(CARDS_DATA)
-        .filter(key => !CARDS_DATA[key].isSignatureMove)
-        .map(key => createCard(key));
+  const player = availablePlayers[Math.floor(Math.random() * availablePlayers.length)];
 
-    const cards: Card[] = [];
+  // --- Card Selection ---
+  const allCardsPool = Object.keys(CARDS_DATA)
+      .filter(key => !CARDS_DATA[key].isSignatureMove)
+      .map(key => createCard(key));
 
-    if (rarityLock === 'Common') {
-        const commonCards = allCardsPool.filter(c => c.rarity === 'Common');
-        cards.push(...shuffleArray(commonCards).slice(0, 9));
-    } else {
-        const commonPool = shuffleArray(allCardsPool.filter(c => c.rarity === 'Common'));
-        const rarePool = shuffleArray(allCardsPool.filter(c => c.rarity === 'Rare'));
-        const legendaryPool = shuffleArray(allCardsPool.filter(c => c.rarity === 'Legendary'));
+  const cards: Card[] = [];
 
-        for (let i = 0; i < 9; i++) {
-            const cardRoll = Math.random();
-            // Card rarity distribution: 84% common, 15% rare, 1% legendary
-            if (cardRoll < 0.01 && legendaryPool.length > 0) { // 1% Legendary
-                cards.push(legendaryPool.pop()!);
-            } else if (cardRoll < 0.16 && rarePool.length > 0) { // 15% Rare (1% + 15% = 16%)
-                cards.push(rarePool.pop()!);
-            } else if (commonPool.length > 0) { // 84% Common
-                cards.push(commonPool.pop()!);
-            } else if (rarePool.length > 0) { // Fallback if common pool runs out
-                cards.push(rarePool.pop()!);
-            } else if (legendaryPool.length > 0) { // Fallback if both run out
-                cards.push(legendaryPool.pop()!);
-            }
-        }
+  if (rarityLock === 'Common') {
+    const commonCards = allCardsPool.filter(c => c.rarity === 'Common');
+    cards.push(...shuffleArray(commonCards).slice(0, 9));
+  } else {
+    const commonPool = shuffleArray(allCardsPool.filter(c => c.rarity === 'Common'));
+    const rarePool = shuffleArray(allCardsPool.filter(c => c.rarity === 'Rare'));
+    const legendaryPool = shuffleArray(allCardsPool.filter(c => c.rarity === 'Legendary'));
+
+    for (let i = 0; i < 9; i++) {
+      const cardRoll = Math.random();
+      // Card rarity distribution: 84% common, 15% rare, 1% legendary
+      if (cardRoll < 0.01 && legendaryPool.length > 0) { // 1% Legendary
+        cards.push(legendaryPool.pop()!);
+      } else if (cardRoll < 0.16 && rarePool.length > 0) { // 15% Rare (1% + 15% = 16%)
+        cards.push(rarePool.pop()!);
+      } else if (commonPool.length > 0) { // 84% Common
+        cards.push(commonPool.pop()!);
+      } else if (rarePool.length > 0) { // Fallback if common pool runs out
+        cards.push(rarePool.pop()!);
+      } else if (legendaryPool.length > 0) { // Fallback if both run out
+        cards.push(legendaryPool.pop()!);
+      }
     }
-    
-    // Ensure we have exactly 9 cards, even if pools run dry
-    while (cards.length < 9) {
-        const fallbackCardKey = CARD_POOL_KEYS[Math.floor(Math.random() * CARD_POOL_KEYS.length)];
-        cards.push(createCard(fallbackCardKey));
-    }
+  }
 
-    return { player, cards: cards.slice(0, 9) };
+  // Ensure we have exactly 9 cards, even if pools run dry
+  while (cards.length < 9) {
+    const fallbackCardKey = CARD_POOL_KEYS[Math.floor(Math.random() * CARD_POOL_KEYS.length)];
+    cards.push(createCard(fallbackCardKey));
+  }
+
+  return { player, cards: cards.slice(0, 9) };
 };
 
 
@@ -373,9 +360,9 @@ export const CONCRETE_CRUSHERS: Team = {
   signatureMove: createCard('WRECKING_BALL'),
   courtImage: createCourtImageUrl('The Concrete Crushers'),
   players: [
-    { id: 'op1', name: 'Brick', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Brick', Archetype.Slasher) },
-    { id: 'op2', name: 'Steel', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Steel', Archetype.RimProtector) },
-    { id: 'op3', name: 'Hammer', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Hammer', Archetype.Slasher) },
+    { id: 'op1', name: 'Brick', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Brick') },
+    { id: 'op2', name: 'Steel', archetypes: [Archetype.RimProtector], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Steel') },
+    { id: 'op3', name: 'Hammer', archetypes: [Archetype.Slasher], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Hammer') },
   ],
   deck: [
     // Shots (7)
@@ -398,9 +385,9 @@ export const NEON_NETS: Team = {
   signatureMove: createCard('GLITCH_IN_THE_SYSTEM'),
   courtImage: createCourtImageUrl('The Neon Nets'),
   players: [
-    { id: 'op4', name: 'Flash', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Flash', Archetype.Sharpshooter) },
-    { id: 'op5', name: 'Glitch', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Glitch', Archetype.Playmaker) },
-    { id: 'op6', name: 'Vapor', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Vapor', Archetype.Sharpshooter) },
+    { id: 'op4', name: 'Flash', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Flash') },
+    { id: 'op5', name: 'Glitch', archetypes: [Archetype.Playmaker], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Glitch') },
+    { id: 'op6', name: 'Vapor', archetypes: [Archetype.Sharpshooter], rarity: 'Common', statuses: [], imageUrl: createPlayerImageUrl('Vapor') },
   ],
   deck: [
     // Shots (9)

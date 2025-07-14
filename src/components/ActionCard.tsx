@@ -22,6 +22,13 @@ const archetypeColorMap: { [key in Archetype]: { border: string, bg: string, tex
   [Archetype.Superstar]:          { border: 'border-yellow-400',   bg: 'bg-gradient-to-t from-black to-yellow-800/60',    text: 'text-yellow-200' },
 };
 
+const PLACEHOLDER_SVG_URL = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Crect width='1' height='1' fill='%23374151'/%3E%3C/svg%3E"; // bg-gray-700
+const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  if (e.currentTarget.src !== PLACEHOLDER_SVG_URL) {
+    e.currentTarget.src = PLACEHOLDER_SVG_URL;
+  }
+};
+
 const ActionCard: React.FC<ActionCardProps> = ({ card, onClick, isDisabled, displayCost, onLongPressStart, onLongPressEnd, isSelected, size = 'normal' }) => {
   const { border, bg, text } = archetypeColorMap[card.archetype];
   const isReaction = card.keywords?.includes(Keyword.Reaction);
@@ -110,8 +117,13 @@ const ActionCard: React.FC<ActionCardProps> = ({ card, onClick, isDisabled, disp
     >
       <CostDisplay />
       
-      <div className="h-[60%] w-full bg-cover bg-center" style={{ backgroundImage: `url('${card.imageUrl}')`}}>
-        {/* Image is background */}
+      <div className="h-[60%] w-full bg-gray-700">
+        <img
+          src={card.imageUrl}
+          alt={`${card.name} card art`}
+          className="w-full h-full object-cover"
+          onError={handleImageError}
+        />
       </div>
 
       <div className={`h-[40%] w-full ${infoPadding} flex flex-col justify-center items-center text-center ${bg}`}>

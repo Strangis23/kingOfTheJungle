@@ -35,6 +35,14 @@ const statusIcons: { [key in PlayerStatusName]: string } = {
     'NoHypeGain': '❄️',
 }
 
+const PLACEHOLDER_SVG_URL = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Crect width='1' height='1' fill='%23374151'/%3E%3C/svg%3E"; // bg-gray-700
+const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  if (e.currentTarget.src !== PLACEHOLDER_SVG_URL) {
+    e.currentTarget.src = PLACEHOLDER_SVG_URL;
+  }
+};
+
+
 const PlayerDisplay: React.FC<PlayerDisplayProps> = ({ player, isSelectable, isSelected, onClick, onLongPressStart, onLongPressEnd }) => {
   const styles = archetypeStyles[player.archetypes[0]];
   const rarityGlow = rarityStyles[player.rarity].glow;
@@ -97,10 +105,13 @@ const PlayerDisplay: React.FC<PlayerDisplayProps> = ({ player, isSelectable, isS
       className={`relative w-28 h-36 sm:w-32 sm:h-40 bg-gray-800 border-4 ${selectedClasses} rounded-lg shadow-md ${cursorClass} ${selectableClasses} flex flex-col overflow-hidden transition-shadow duration-300 ${rarityGlow}`}
     >
       {/* Image Area */}
-      <div 
-        className="h-[65%] w-full bg-cover bg-center relative"
-        style={{ backgroundImage: `url('${player.imageUrl}')` }}
-      >
+      <div className="h-[65%] w-full bg-gray-700 relative">
+        <img
+          src={player.imageUrl}
+          alt={`${player.name} portrait`}
+          className="w-full h-full object-cover"
+          onError={handleImageError}
+        />
         {player.statuses.length > 0 && (
           <div className="absolute top-1 right-1 flex flex-col gap-1">
             {player.statuses.map(status => (
