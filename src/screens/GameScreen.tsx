@@ -262,17 +262,17 @@ const GameScreen: React.FC<GameScreenProps> = ({ activeRoster, playerDeck, playe
             case 'Vicious Block':
                 animation.outcome = 'block';
                 isNegated = true;
-                // possessionChange = true; // No longer a turnover
-                newState = updateMomentum(newState, by === 'player' ? -2 : 2);
-                logMessages.push(`The shot is BLOCKED! The offense keeps possession, but loses momentum.`);
+                possessionChange = true;
+                newState = updateMomentum(newState, by === 'player' ? -3 : 3);
+                logMessages.push(`The shot is VICIOUSLY BLOCKED! Turnover!`);
                 break;
             case 'Pick Pocket':
                 if (Math.random() < 0.33) {
                     animation.outcome = 'steal';
                     isNegated = true;
-                    // possessionChange = true; // No longer a turnover
-                    newState = updateMomentum(newState, by === 'player' ? -2 : 2);
-                    logMessages.push("Successful steal! The play is broken up, but possession is maintained. Momentum lost.");
+                    possessionChange = true;
+                    newState = updateMomentum(newState, by === 'player' ? -3 : 3);
+                    logMessages.push("Successful steal! Turnover!");
                 } else {
                     logMessages.push("Pick pocket attempt failed!");
                 }
@@ -280,11 +280,9 @@ const GameScreen: React.FC<GameScreenProps> = ({ activeRoster, playerDeck, playe
             case 'Intercept':
                 animation.outcome = 'negated';
                 isNegated = true;
-                const drawResult = drawCards(
-                    by === 'player' ? newState.opponentDeck : newState.playerDeck, 
-                    by === 'player' ? newState.opponentDiscard : newState.playerDiscard, 
-                    1, []
-                );
+                const drawerDeck = by === 'player' ? newState.opponentDeck : newState.playerDeck;
+                const drawerDiscard = by === 'player' ? newState.opponentDiscard : newState.playerDiscard;
+                const drawResult = drawCards(drawerDeck, drawerDiscard, 1, []);
                 if (by === 'player') {
                     newState.opponentHand = [...newState.opponentHand, ...drawResult.newHand];
                     newState.opponentDeck = drawResult.newDeck;
@@ -294,13 +292,48 @@ const GameScreen: React.FC<GameScreenProps> = ({ activeRoster, playerDeck, playe
                     newState.playerDeck = drawResult.newDeck;
                     newState.playerDiscard = drawResult.newDiscard;
                 }
+
                 if (Math.random() < 0.25) {
-                    // possessionChange = true; // No longer a turnover
-                    animation.outcome = 'steal'; // Use steal animation for clarity
-                    newState = updateMomentum(newState, by === 'player' ? -2 : 2);
-                    logMessages.push("Pass intercepted! Play is disrupted, but possession is maintained. Momentum lost.");
+                    possessionChange = true;
+                    animation.outcome = 'steal';
+                    newState = updateMomentum(newState, by === 'player' ? -3 : 3);
+                    logMessages.push("Pass intercepted! It's a turnover!");
+                } else {
+                    logMessages.push("Pass is negated! The reacting team draws a card.");
                 }
                 break;
+            case 'Draw the Charge':
+            case 'Take the Charge':
+                if (card.archetype === Archetype.Slasher) {
+                    logMessages.push(`It's a Slasher card! ${reactionCard.name} is successful! Turnover!`);
+                    animation.outcome = 'negated';
+                    isNegated = true;
+                    possessionChange = true;
+                    newState = updateMomentum(newState, by === 'player' ? -3 : 3);
+                } else {
+                    logMessages.push(`${reactionCard.name} has no effect on a non-Slasher card.`);
+                }
+                break;
+            case 'Force the Turnover':
+                if (Math.random() < 0.5) {
+                    logMessages.push(`Force the Turnover succeeds! Turnover!`);
+                    animation.outcome = 'steal';
+                    isNegated = true;
+                    possessionChange = true;
+                    newState = updateMomentum(newState, by === 'player' ? -3 : 3);
+                } else {
+                    logMessages.push(`Force the Turnover fails!`);
+                }
+                break;
+            case 'Perimeter Lockdown':
+                 if (card.name.includes("Three-Pointer") || card.name.includes("3pt")) {
+                    logMessages.push("Perimeter Lockdown! The 3-point shot is shut down!");
+                    animation.outcome = 'negated';
+                    isNegated = true;
+                 } else {
+                    logMessages.push("Perimeter Lockdown only works on 3-point shots.");
+                 }
+                 break;
         }
     }
     
@@ -309,16 +342,20 @@ const GameScreen: React.FC<GameScreenProps> = ({ activeRoster, playerDeck, playe
     // --- Shot Logic ---
     if (card.type === CardType.Shot && !isNegated) {
         let shotChance = card.successChance || 70;
-        if (reactionCard?.name === 'Contest Shot') {
-            shotChance -= 30;
-            logMessages.push(`Shot is contested! Success chance reduced to ${shotChance}%.`);
-        }
-        if (reactionCard?.name === 'Wrecking Ball') {
-            // Can't be blocked, but can still be contested. But since this is a reaction logic, it's weird.
-            // Let's assume Wrecking Ball is not a reaction. The logic is for when it's the main card.
+        // Apply reaction card modifiers
+        if (reactionCard) {
+            const reductionMap: { [key:string]: number } = {
+                'Tough Contest': 25, 'Contest Shot': 40, 'Closeout': 20, 
+                'Verticality': 25, 'Alter the Shot': 30, 'Intimidator': 20
+            };
+            if (reactionCard.name in reductionMap) {
+                const reduction = reductionMap[reactionCard.name];
+                shotChance -= reduction;
+                logMessages.push(`${reactionCard.name} makes the shot tougher! Success chance reduced by ${reduction}%.`);
+            }
         }
         success = Math.random() * 100 < shotChance;
-        animation.points = card.name.includes("Three") ? 3 : 2;
+        animation.points = (card.name.includes("Three") || card.name.includes("3pt")) ? 3 : 2;
         animation.outcome = success ? 'score' : 'miss';
 
         if (!success && card.name === 'Wrecking Ball') {
@@ -393,6 +430,10 @@ const GameScreen: React.FC<GameScreenProps> = ({ activeRoster, playerDeck, playe
         logMessages.push(`${by === 'player' ? 'Player' : 'Opponent'} scores ${points} points!`);
     } else if (card.type === CardType.Shot && !isNegated) {
         logMessages.push("The shot misses!");
+        if (reactionCard?.name === 'Box Out' || reactionCard?.name === 'Rebound Machine') {
+            logMessages.push(`${reactionCard.name} secures the rebound! Turnover!`);
+            possessionChange = true;
+        }
     }
 
     newState.actionAnimation = animation;
@@ -488,6 +529,8 @@ const GameScreen: React.FC<GameScreenProps> = ({ activeRoster, playerDeck, playe
     
     setGameState(prev => {
       const stateAfterGrit = {...prev, playerGrit: prev.playerGrit - reactionCard.gritCost!};
+      stateAfterGrit.playerHand = stateAfterGrit.playerHand.filter(c => c.id !== reactionCard.id);
+      stateAfterGrit.playerDiscard = [...stateAfterGrit.playerDiscard, reactionCard];
       return resolveActionState(stateAfterGrit, stateAfterGrit.pendingCard!, reactionCard);
     });
   };
@@ -565,6 +608,8 @@ const GameScreen: React.FC<GameScreenProps> = ({ activeRoster, playerDeck, playe
         if (possibleReactions.length > 0) {
             const reactionCard = possibleReactions[0];
             const stateAfterGrit = {...prev, opponentGrit: prev.opponentGrit - reactionCard.gritCost!};
+            stateAfterGrit.opponentHand = stateAfterGrit.opponentHand.filter(c => c.id !== reactionCard.id);
+            stateAfterGrit.opponentDiscard = [...stateAfterGrit.opponentDiscard, reactionCard];
             return resolveActionState(stateAfterGrit, stateAfterGrit.pendingCard!, reactionCard);
         } else {
             return resolveActionState(prev, prev.pendingCard!);
@@ -618,7 +663,7 @@ const GameScreen: React.FC<GameScreenProps> = ({ activeRoster, playerDeck, playe
   );
 
   return (
-    <div className="w-full h-full bg-cover bg-center flex flex-col p-2 sm:p-4 text-white relative overflow-hidden" style={{ backgroundImage: `url('${opponentTeam.courtImage}')`, backgroundColor: '#1a202c', backgroundBlendMode: 'overlay' }}>
+    <div className="w-full h-full bg-cover bg-center flex flex-col p-2 sm:p-4 text-white relative overflow-hidden" style={{ backgroundImage: `url('${gameState.opponentTeam.courtImage}')`, backgroundColor: '#1a202c', backgroundBlendMode: 'overlay' }}>
       <CardDetailModal card={gameState.detailedCard} />
       {gameState.phase === GamePhase.GameOver && <EndGameModal didPlayerWin={didPlayerWin} isTie={isTie} onClose={() => onGameEnd(didPlayerWin)} />}
       <PlayByPlay logs={gameState.gameLog} isOpen={isPlayByPlayOpen} onClose={() => setPlayByPlayOpen(false)} />
@@ -711,7 +756,7 @@ const GameScreen: React.FC<GameScreenProps> = ({ activeRoster, playerDeck, playe
       <div className="flex flex-col-reverse sm:flex-row justify-around items-center gap-2 my-1">
          <div className="flex-1 flex justify-center sm:justify-start items-center gap-2 order-3 sm:order-1">
             <div className="text-center bg-black/50 p-2 rounded w-28 sm:w-32">
-                <p className="text-lg sm:text-xl font-bold text-cyan-400">HYPE</p>
+       eg         <p className="text-lg sm:text-xl font-bold text-cyan-400">HYPE</p>
                 <p className="text-xl sm:text-2xl">{gameState.playerHype}/{gameState.playerMaxHype}</p>
                 <p className="text-xs sm:text-base">Deck: {gameState.playerDeck.length}</p>
             </div>

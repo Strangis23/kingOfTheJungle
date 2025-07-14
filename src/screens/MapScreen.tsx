@@ -38,7 +38,7 @@ const MapScreen: React.FC<MapScreenProps> = ({ mapNodes, onStartGame, onOpenPack
     <div className="w-full h-full bg-gray-800 text-white flex flex-col items-center justify-center p-4 sm:p-8">
       <h1 className="text-3xl md:text-5xl font-bold text-yellow-400 mb-4 text-center" style={{ fontFamily: 'monospace' }}>ASPHALT ASCENDANTS</h1>
       <p className="text-base md:text-lg text-gray-400 mb-8 text-center">Choose your next challenge.</p>
-      <div className="relative w-full max-w-4xl h-[60vh] md:h-96 bg-black/20 rounded-lg border-2 border-gray-600 p-4" style={{ backgroundImage: 'url("assets/images/textures/crissxcross.jpeg")' }}>
+      <div className="relative w-full max-w-4xl h-[60vh] md:h-96 bg-black/20 rounded-lg border-2 border-gray-600 p-4" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/crissxcross.png")' }}>
         <button
           onClick={() => setShowResetConfirm(true)}
           className="absolute top-4 right-4 px-4 py-2 bg-red-700 hover:bg-red-600 text-white font-bold rounded-lg transition-colors z-20"

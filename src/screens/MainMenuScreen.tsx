@@ -15,7 +15,7 @@ const MainMenuScreen: React.FC<MainMenuScreenProps> = ({ onNewRun, onResetAll, o
   };
 
   return (
-    <div className="w-full h-full bg-gray-900 text-white flex flex-col items-center justify-center p-4 sm:p-8" style={{ backgroundImage: 'url("assets/images/textures/court-texture.jpeg")', backgroundBlendMode: 'overlay', backgroundColor: '#1a202c' }}>
+    <div className="w-full h-full bg-gray-900 text-white flex flex-col items-center justify-center p-4 sm:p-8" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/asfalt-dark.png")', backgroundBlendMode: 'overlay', backgroundColor: '#1a202c' }}>
       <div className="text-center bg-black/60 p-8 sm:p-12 rounded-xl shadow-2xl border-2 border-yellow-500/50">
         <h1 className="text-5xl md:text-7xl font-black text-yellow-400" style={{ fontFamily: 'monospace' }}>ASPHALT</h1>
         <h1 className="text-5xl md:text-7xl font-black text-white" style={{ fontFamily: 'monospace' }}>ASCENDANTS</h1>
