@@ -3,10 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://Strangis23.github.io/kingOfTheJungle",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "dotenv": "^17.2.0",
@@ -18,6 +21,7 @@
     "@types/express": "^5.0.3",
     "@types/node": "^22.16.3",
     "@vitejs/plugin-react": "^4.6.0",
+    "gh-pages": "^6.3.0",
     "tsx": "^4.20.3",
     "typescript": "~5.7.2",
     "vite": "^6.2.0"
@@ -33,6 +37,5 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Strangis23/kingOfTheJungle/issues"
-  },
-  "homepage": "https://github.com/Strangis23/kingOfTheJungle#readme"
+  }
 }

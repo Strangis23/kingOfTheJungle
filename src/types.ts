@@ -45,6 +45,7 @@ export interface Card {
   trigger?: CardType[];
   successChance?: number; // e.g., 80 for 80%
   imageUrl: string;
+  temporary?: boolean; // For cards with temporary cost changes like from Glitch in the System
 }
 
 export type PlayerStatusName = 'Locked Down' | 'Ankles Broken' | 'Heated Up' | 'Fatigued' | 'CantPlayShots' | 'NoHypeGain';
@@ -116,8 +117,30 @@ export interface GameState {
   activePlayerId: string | null;
   actionAnimation: ActionAnimation | null;
   pendingCard: { card: Card; by: 'player' | 'opponent' } | null;
-  isFifthGearActive: boolean;
   detailedCard: Card | null;
+  
+  // --- Turn-based Effects ---
+  isFifthGearActive: boolean; // Renamed from cardCostReduction for clarity on its multiple effects
+  playerShotSuccessBonus: number;
+  player3PtSuccessBonus: number;
+  playerBonusMomentumOnScore: number;
+  playerNextShotCostReduction: number;
+  playerNextSharpshooterCostReduction: number;
+  playerNextPassCostReduction: number;
+  playerNextShotSuccessBonus: number;
+  playerIsDeadeyeActive: boolean;
+  playerCannotBeBlocked: boolean;
+  playerBlockSlasherReactions: boolean;
+  playerSuccessfulBlocksGrantPossession: boolean;
+  playerInterceptBonus: number; // e.g. 0.25 for +25% chance
+
+  opponentShotSuccessReduction: number;
+  opponentSlasherCostIncrease: number;
+  opponentCannotReact: boolean;
+  opponentNextCardCostIncrease: number;
+
+  cardsPlayedThisTurn: Card[];
+  didScoreThisTurn: boolean;
 }
 
 export enum MapNodeType {

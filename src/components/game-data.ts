@@ -1,17 +1,17 @@
 import { Team, Player, Card, Archetype, CardType, Keyword, Playbook, CardPack } from '../types.ts';
 
 const createCardImageUrl = (cardKey: string) => {
-  return `assets/cards/${cardKey}.png`;
+    return `assets/cards/${cardKey}.png`;
 };
 
 const createPlayerImageUrl = (playerName: string) => {
-  const filename = playerName.toUpperCase().replace(/ /g, '_').replace(/"/g, '').replace(/'/g, '');
-  return `assets/players/${filename}.png`;
+    const filename = playerName.toUpperCase().replace(/ /g, '_').replace(/"/g, '').replace(/'/g, '');
+    return `assets/players/${filename}.png`;
 };
 
 const createCourtImageUrl = (courtName: string) => {
-  const filename = courtName.toUpperCase().replace(/ /g, '_');
-  return `assets/courts/${filename}.png`;
+    const filename = courtName.toUpperCase().replace(/ /g, '_');
+    return `assets/courts/${filename}.png`;
 };
 
 // --- CARDS ---
@@ -110,7 +110,7 @@ const CARDS_DATA: { [key: string]: Omit<Card, 'id' | 'effect' | 'imageUrl'> & { 
   COMMUNICATE: { name: 'Communicate', rarity: 'Common', hypeCost: 1, type: CardType.Utility, archetype: Archetype.PerimeterDefender, description: 'Gain 3 Grit for your next defensive possession.' },
   FORCE_THE_EXTRA_PASS: { name: 'Force the Extra Pass', rarity: 'Common', hypeCost: 0, gritCost: 1, type: CardType.Defense, archetype: Archetype.PerimeterDefender, description: 'Reaction to: Shot. Negate the shot. The opponent draws a card instead.', keywords: [Keyword.Reaction], trigger: [CardType.Shot] },
   CLOSE_THE_GAP: { name: 'Close the Gap', rarity: 'Common', hypeCost: 0, type: CardType.Utility, archetype: Archetype.PerimeterDefender, description: 'Exhaust: Gain 1 Grit.', keywords: [Keyword.Exhaust] },
-
+  
   // --- Rim Protector Cards ---
   VICIOUS_BLOCK: { name: 'Vicious Block', rarity: 'Rare', hypeCost: 0, gritCost: 2, type: CardType.Defense, archetype: Archetype.RimProtector, description: 'Reaction to: Shot. Negate the action. Gain Possession.', keywords: [Keyword.Reaction], trigger: [CardType.Shot] },
   BLOCK_PARTY: { name: 'Block Party', rarity: 'Legendary', hypeCost: 4, type: CardType.Utility, archetype: Archetype.RimProtector, description: "For the opponent's next turn, your successful blocks also grant you possession." },
@@ -263,7 +263,7 @@ const ALL_PLAYERS: Player[] = [
   { id: 'r25', name: 'Zane "The Zealot" Al-Jamil', archetypes: [Archetype.PerimeterDefender, Archetype.Sharpshooter], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Zane "The Zealot" Al-Jamil') },
   { id: 'r26', name: 'Adrian "The Artist" Bell', archetypes: [Archetype.Playmaker, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Adrian "The Artist" Bell') },
   { id: 'r27', name: 'Cassia "The Comet" Li', archetypes: [Archetype.Sharpshooter, Archetype.Slasher], rarity: 'Rare', statuses: [], imageUrl: createPlayerImageUrl('Cassia "The Comet" Li') },
-
+  
   // == New Legendaries ("Superstars") (9) ==
   { id: 'l1', name: 'Orion "The Oracle" Hayes', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Orion "The Oracle" Hayes') },
   { id: 'l2', name: 'Serena "The Sovereign" Cruz', archetypes: [Archetype.Superstar], rarity: 'Legendary', statuses: [], imageUrl: createPlayerImageUrl('Serena "The Sovereign" Cruz') },
@@ -280,76 +280,76 @@ const ALL_PLAYERS: Player[] = [
 const CARD_POOL_KEYS = Object.keys(CARDS_DATA).filter(key => !CARDS_DATA[key].isSignatureMove);
 
 const shuffleArray = <T>(array: T[]): T[] => {
-  const newArray = [...array];
-  for (let i = newArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-  }
-  return newArray;
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
 };
 
 export const generateCardPack = (rarityLock: 'Common' | null = null): CardPack => {
-  // --- Player Selection ---
-  let availablePlayers: Player[];
+    // --- Player Selection ---
+    let availablePlayers: Player[];
 
-  if (rarityLock === 'Common') {
-    availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Common');
-  } else {
-    // Rarity distribution: 80% Common, 15% Rare, 5% Legendary
-    const playerRoll = Math.random();
-    if (playerRoll < 0.05) { // 5% for Legendary
-      availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Legendary');
-    } else if (playerRoll < 0.20) { // 15% for Rare
-      availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Rare');
-    } else { // 80% for Common
-      availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Common');
+    if (rarityLock === 'Common') {
+        availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Common');
+    } else {
+        // Rarity distribution: 80% Common, 15% Rare, 5% Legendary
+        const playerRoll = Math.random();
+        if (playerRoll < 0.05) { // 5% for Legendary
+            availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Legendary');
+        } else if (playerRoll < 0.20) { // 15% for Rare
+            availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Rare');
+        } else { // 80% for Common
+            availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Common');
+        }
     }
-  }
 
-  if (availablePlayers.length === 0) availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Common');
-  if (availablePlayers.length === 0) availablePlayers = ALL_PLAYERS;
+    if (availablePlayers.length === 0) availablePlayers = ALL_PLAYERS.filter(p => p.rarity === 'Common');
+    if (availablePlayers.length === 0) availablePlayers = ALL_PLAYERS;
+    
+    const player = availablePlayers[Math.floor(Math.random() * availablePlayers.length)];
 
-  const player = availablePlayers[Math.floor(Math.random() * availablePlayers.length)];
+    // --- Card Selection ---
+    const allCardsPool = Object.keys(CARDS_DATA)
+        .filter(key => !CARDS_DATA[key].isSignatureMove)
+        .map(key => createCard(key));
 
-  // --- Card Selection ---
-  const allCardsPool = Object.keys(CARDS_DATA)
-      .filter(key => !CARDS_DATA[key].isSignatureMove)
-      .map(key => createCard(key));
+    const cards: Card[] = [];
 
-  const cards: Card[] = [];
+    if (rarityLock === 'Common') {
+        const commonCards = allCardsPool.filter(c => c.rarity === 'Common');
+        cards.push(...shuffleArray(commonCards).slice(0, 9));
+    } else {
+        const commonPool = shuffleArray(allCardsPool.filter(c => c.rarity === 'Common'));
+        const rarePool = shuffleArray(allCardsPool.filter(c => c.rarity === 'Rare'));
+        const legendaryPool = shuffleArray(allCardsPool.filter(c => c.rarity === 'Legendary'));
 
-  if (rarityLock === 'Common') {
-    const commonCards = allCardsPool.filter(c => c.rarity === 'Common');
-    cards.push(...shuffleArray(commonCards).slice(0, 9));
-  } else {
-    const commonPool = shuffleArray(allCardsPool.filter(c => c.rarity === 'Common'));
-    const rarePool = shuffleArray(allCardsPool.filter(c => c.rarity === 'Rare'));
-    const legendaryPool = shuffleArray(allCardsPool.filter(c => c.rarity === 'Legendary'));
-
-    for (let i = 0; i < 9; i++) {
-      const cardRoll = Math.random();
-      // Card rarity distribution: 84% common, 15% rare, 1% legendary
-      if (cardRoll < 0.01 && legendaryPool.length > 0) { // 1% Legendary
-        cards.push(legendaryPool.pop()!);
-      } else if (cardRoll < 0.16 && rarePool.length > 0) { // 15% Rare (1% + 15% = 16%)
-        cards.push(rarePool.pop()!);
-      } else if (commonPool.length > 0) { // 84% Common
-        cards.push(commonPool.pop()!);
-      } else if (rarePool.length > 0) { // Fallback if common pool runs out
-        cards.push(rarePool.pop()!);
-      } else if (legendaryPool.length > 0) { // Fallback if both run out
-        cards.push(legendaryPool.pop()!);
-      }
+        for (let i = 0; i < 9; i++) {
+            const cardRoll = Math.random();
+            // Card rarity distribution: 84% common, 15% rare, 1% legendary
+            if (cardRoll < 0.01 && legendaryPool.length > 0) { // 1% Legendary
+                cards.push(legendaryPool.pop()!);
+            } else if (cardRoll < 0.16 && rarePool.length > 0) { // 15% Rare (1% + 15% = 16%)
+                cards.push(rarePool.pop()!);
+            } else if (commonPool.length > 0) { // 84% Common
+                cards.push(commonPool.pop()!);
+            } else if (rarePool.length > 0) { // Fallback if common pool runs out
+                cards.push(rarePool.pop()!);
+            } else if (legendaryPool.length > 0) { // Fallback if both run out
+                cards.push(legendaryPool.pop()!);
+            }
+        }
     }
-  }
+    
+    // Ensure we have exactly 9 cards, even if pools run dry
+    while (cards.length < 9) {
+        const fallbackCardKey = CARD_POOL_KEYS[Math.floor(Math.random() * CARD_POOL_KEYS.length)];
+        cards.push(createCard(fallbackCardKey));
+    }
 
-  // Ensure we have exactly 9 cards, even if pools run dry
-  while (cards.length < 9) {
-    const fallbackCardKey = CARD_POOL_KEYS[Math.floor(Math.random() * CARD_POOL_KEYS.length)];
-    cards.push(createCard(fallbackCardKey));
-  }
-
-  return { player, cards: cards.slice(0, 9) };
+    return { player, cards: cards.slice(0, 9) };
 };
 
 
