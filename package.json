@@ -12,12 +12,15 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@capacitor/android": "^7.4.2",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@capacitor/cli": "^7.4.2",
+    "@capacitor/core": "^7.4.2",
     "@types/express": "^5.0.3",
     "@types/node": "^22.16.3",
     "@vitejs/plugin-react": "^4.6.0",

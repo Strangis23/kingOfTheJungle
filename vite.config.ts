@@ -12,7 +12,8 @@ export default defineConfig(({ mode }) => {
       // --- CRITICAL DEPLOYMENT CONFIG ---
       // This tells Vite that your site will be hosted in a subfolder.
       // The value must match your repository name, with slashes.
-      base: '/kingOfTheJungle/',
+	  //base: '/kingOfTheJungle/', 
+      base: './.',
 
       // --- PLUGIN CONFIGURATION ---
       // You must include the React plugin for a React project to work.
